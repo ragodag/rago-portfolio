@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Videos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #b50000;
+      background-image: radial-gradient(ellipse at top left, #ff1a1a 0%, #8b0000 60%, #400000 100%);
+      min-height: 100vh;
+      font-family: 'Barlow', sans-serif;
+      color: #fff;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.6rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: #fff; }
+    nav a.active { border-bottom: 2px solid #fff; padding-bottom: 2px; }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 3.5rem 1rem 2rem;
+    }
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.08em;
+      text-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    }
+    header p {
+      font-weight: 300;
+      font-size: 1rem;
+      opacity: 0.65;
+      margin-top: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── FILTER CARDS ── */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      padding: 1.5rem 2rem 2.5rem;
+    }
+    .filter-btn {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0.9rem 1.8rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-transform: uppercase;
+    }
+    .filter-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+    }
+    .filter-btn.active {
+      background: #fff;
+      color: #8b0000;
+      border-color: #fff;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .section.visible {
+      display: block;
+    }
+
+    /* ── SECTION TITLE ANIMATION ── */
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.8rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section-title.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.6rem;
+    }
+
+    /* ── VIDEO CARD ── */
+    .card {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      gap: 0.6rem;
+      pointer-events: none;
+    }
+    .placeholder svg { opacity: 0.4; }
+    .placeholder span { font-size: 0.75rem; opacity: 0.4; letter-spacing: 0.08em; text-transform: uppercase; }
+    .card-info { padding: 0.9rem 1rem; }
+    .card-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.06em;
+    }
+    .card-info p {
+      font-size: 0.8rem;
+      opacity: 0.55;
+      margin-top: 0.25rem;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="active">Music Videos</a>
+    <a href="cinematic-projects.html">Cinematic Projects</a>
+    <a href="experimental-projects.html">Experimental Projects</a>
+  </nav>
+
+  <header>
+    <h1>Music Videos</h1>
+    <p>Visual direction &amp; production</p>
+  </header>
+
+  <!-- ── FILTER CARDS ── -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="showSection('trippy')">🌀 Trippy / Underground</button>
+    <button class="filter-btn" onclick="showSection('energy')">⚡ High Energy</button>
+    <button class="filter-btn" onclick="showSection('cinematic')">🎬 Slow Cinematic</button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — TRIPPY / UNDERGROUND
+  ══════════════════════════════════════ -->
+  <section class="section visible" id="trippy">
+    <h2 class="section-title">Trippy / Underground</h2>
+    <div class="grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — HIGH ENERGY
+  ══════════════════════════════════════ -->
+  <section class="section" id="energy">
+    <h2 class="section-title">High Energy</h2>
+    <div class="grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="video-wrapper">
+         <iframe width="560" height="315" src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — SLOW CINEMATIC
+  ══════════════════════════════════════ -->
+  <section class="section" id="cinematic">
+    <h2 class="section-title">Slow Cinematic</h2>
+    <div class="grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <div class="video-wrapper">
+          <!-- PASTE IFRAME HERE -->
+          <div class="placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            <span>Paste YouTube embed here</span>
+          </div>
+        </div>
+        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    function showSection(id) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(s => {
+        s.classList.remove('visible');
+        s.querySelector('.section-title').classList.remove('animate');
+      });
+
+      // Deactivate all buttons
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+
+      // Show selected section
+      const section = document.getElementById(id);
+      section.classList.add('visible');
+
+      // Activate clicked button
+      event.target.classList.add('active');
+
+      // Trigger title animation
+      setTimeout(() => {
+        section.querySelector('.section-title').classList.add('animate');
+      }, 50);
+    }
+
+    // Animate the first section title on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.section.visible .section-title').classList.add('animate');
+      }, 200);
+    });
+  </script>
+
+</body>
+</html>

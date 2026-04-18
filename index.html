@@ -3,141 +3,301 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Music Videos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400&display=swap" rel="stylesheet"/>
+  <title>RAGO — Videographer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --red: #b50000;
+      --red-bright: #ff1a1a;
+      --red-dark: #400000;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      background-color: #b50000;
-      background-image: radial-gradient(ellipse at top left, #ff1a1a 0%, #8b0000 60%, #400000 100%);
+      background-color: var(--red);
+      background-image: radial-gradient(ellipse at top left, var(--red-bright) 0%, var(--red) 50%, var(--red-dark) 100%);
       min-height: 100vh;
       font-family: 'Barlow', sans-serif;
-      color: #fff;
+      color: var(--white);
+      overflow-x: hidden;
     }
 
     /* ── NAV ── */
     nav {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      padding: 1.6rem 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(6px);
-      position: sticky;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      right: 0;
+      z-index: 200;
     }
-    nav a {
-      color: rgba(255,255,255,0.7);
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.15em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.6);
       text-decoration: none;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       letter-spacing: 0.12em;
       transition: color 0.2s;
+      cursor: pointer;
     }
-    nav a:hover, nav a.active { color: #fff; }
-    nav a.active { border-bottom: 2px solid #fff; padding-bottom: 2px; }
+    .nav-links a:hover { color: #fff; }
 
-    /* ── HEADER ── */
-    header {
-      text-align: center;
-      padding: 3.5rem 1rem 2rem;
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
     }
-    header h1 {
+
+    .hero-text { position: relative; }
+
+    .hero-eyebrow {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 8vw, 6rem);
-      letter-spacing: 0.08em;
-      text-shadow: 0 4px 24px rgba(0,0,0,0.5);
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      text-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      animation: fadeUp 0.8s ease 0.1s both;
     }
-    header p {
+
+    .hero-title .hello {
+      display: block;
+      font-size: clamp(2rem, 5vw, 4rem);
+      opacity: 0.7;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-title .name {
+      display: block;
+      color: #fff;
+    }
+
+    .hero-desc {
       font-weight: 300;
       font-size: 1rem;
+      line-height: 1.7;
       opacity: 0.65;
-      margin-top: 0.5rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      margin-top: 1.8rem;
+      max-width: 420px;
+      animation: fadeUp 0.8s ease 0.2s both;
     }
 
-    /* ── FILTER CARDS ── */
-    .filter-bar {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      padding: 1.5rem 2rem 2.5rem;
-    }
-    .filter-btn {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 4px;
-      color: rgba(255,255,255,0.7);
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 2.5rem;
+      padding: 0.9rem 2rem;
+      background: #fff;
+      color: var(--red-dark);
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1rem;
-      letter-spacing: 0.1em;
-      padding: 0.9rem 1.8rem;
+      letter-spacing: 0.12em;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+      animation: fadeUp 0.8s ease 0.3s both;
       cursor: pointer;
-      transition: all 0.25s;
-      text-transform: uppercase;
+      border: none;
     }
-    .filter-btn:hover {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border-color: rgba(255,255,255,0.5);
+    .hero-cta:hover {
+      background: rgba(255,255,255,0.85);
+      transform: translateY(-2px);
     }
-    .filter-btn.active {
-      background: #fff;
-      color: #8b0000;
-      border-color: #fff;
-    }
+    .hero-cta svg { transition: transform 0.2s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
 
-    /* ── SECTION ── */
-    .section {
-      display: none;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
+    /* ── HERO IMAGE ── */
+    .hero-image {
+      position: relative;
+      animation: fadeUp 0.8s ease 0.2s both;
     }
-    .section.visible {
+    .hero-image-box {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
-
-    /* ── SECTION TITLE ANIMATION ── */
-    .section-title {
+    .hero-image-tag {
+      position: absolute;
+      bottom: -1rem;
+      left: -1rem;
+      background: #fff;
+      color: var(--red-dark);
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+    }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.4;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #fff;
+    }
+
+    /* ── PORTFOLIO ── */
+    #portfolio {
+      padding: 5rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 0.5rem;
+    }
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    /* ── PAGE TABS ── */
+    .page-tabs {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .page-tab {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
       letter-spacing: 0.08em;
-      margin-bottom: 1.8rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
     }
-    .section-title.animate {
-      opacity: 1;
-      transform: translateY(0);
+    .page-tab:hover { color: rgba(255,255,255,0.7); }
+    .page-tab.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
     }
+
+    /* ── CATEGORY TABS ── */
+    .category-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 0.8rem 1.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .tab-btn.active { background: #fff; color: var(--red-dark); }
+
+    /* ── PANELS ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .filter-section { display: none; }
+    .filter-section.active { display: block; }
 
     /* ── GRID ── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.6rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.4rem;
     }
 
     /* ── VIDEO CARD ── */
     .card {
       background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 4px;
       overflow: hidden;
       transition: transform 0.25s, box-shadow 0.25s;
     }
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
     }
     .video-wrapper {
       position: relative;
@@ -158,306 +318,191 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.5);
       gap: 0.6rem;
-      pointer-events: none;
     }
-    .placeholder svg { opacity: 0.4; }
-    .placeholder span { font-size: 0.75rem; opacity: 0.4; letter-spacing: 0.08em; text-transform: uppercase; }
+    .placeholder svg { opacity: 0.3; }
+    .placeholder span { font-size: 0.7rem; opacity: 0.3; letter-spacing: 0.1em; text-transform: uppercase; }
     .card-info { padding: 0.9rem 1rem; }
     .card-info h3 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       letter-spacing: 0.06em;
     }
     .card-info p {
-      font-size: 0.8rem;
-      opacity: 0.55;
-      margin-top: 0.25rem;
+      font-size: 0.78rem;
+      opacity: 0.5;
+      margin-top: 0.2rem;
       font-weight: 300;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero-image { display: none; }
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      #portfolio { padding: 3rem 1.5rem; }
+      .category-tabs { flex-wrap: wrap; width: 100%; }
+      .page-tabs { gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ── NAV ── -->
   <nav>
-    <a href="index.html" class="active">Music Videos</a>
-    <a href="cinematic-projects.html">Cinematic Projects</a>
-    <a href="experimental-projects.html">Experimental Projects</a>
+    <a class="nav-logo" href="#hero">RAGO</a>
+    <div class="nav-links">
+      <a onclick="scrollToPortfolio('music')">Music Videos</a>
+      <a onclick="scrollToPortfolio('cinematic')">Cinematic</a>
+      <a onclick="scrollToPortfolio('experimental')">Experimental</a>
+    </div>
   </nav>
 
-  <header>
-    <h1>Music Videos</h1>
-    <p>Visual direction &amp; production</p>
-  </header>
-
-  <!-- ── FILTER CARDS ── -->
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="showSection('trippy')">🌀 Trippy / Underground</button>
-    <button class="filter-btn" onclick="showSection('energy')">⚡ High Energy</button>
-    <button class="filter-btn" onclick="showSection('cinematic')">🎬 Slow Cinematic</button>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       SECTION 1 — TRIPPY / UNDERGROUND
-  ══════════════════════════════════════ -->
-  <section class="section visible" id="trippy">
-    <h2 class="section-title">Trippy / Underground</h2>
-    <div class="grid">
-
-    <div class="card">
-  <div class="video-wrapper">
-    <iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe>
-  </div>
-  <div class="card-info">
-    <h3>Video Title</h3>
-    <p>Artist / Info</p>
-  </div>
-</div>
-
-         <div class="card">
-  <div class="video-wrapper">
-    <iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe>
-  </div>
-  <div class="card-info">
-    <h3>Video Title</h3>
-    <p>Artist / Info</p>
-  </div>
-</div>
-
-
-      <div class="card">
-  <div class="video-wrapper">
-    <iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe>
-  </div>
-  <div class="card-info">
-    <h3>Video Title</h3>
-    <p>Artist / Info</p>
-  </div>
-</div>
-
-      <!-- Card 4 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Videographer &amp; Director — UK</p>
+      <h1 class="hero-title">
+        <span class="hello">Hello, I'm</span>
+        <span class="name">RAGO</span>
+      </h1>
+      <p class="hero-desc">
+        Crafting cinematic music videos, short films, and experimental visual work. Based in the UK, shooting everywhere.
+      </p>
+      <button class="hero-cta" onclick="scrollToPortfolio('music')">
+        View My Work
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
+
+    <div class="hero-image">
+      <div class="hero-image-box">
+        <img src="https://drive.google.com/uc?export=view&id=1Vrigejeu_khA2S_qvzKxR5_ZxqTenS_U" alt="Rago">
+      </div>
+      <div class="hero-image-tag">DIRECTOR &amp; DP</div>
+    </div>
+
+    <button class="scroll-hint" onclick="scrollToPortfolio('music')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Scroll
+    </button>
   </section>
 
-  <!-- ══════════════════════════════════════
-       SECTION 2 — HIGH ENERGY
-  ══════════════════════════════════════ -->
-  <section class="section" id="energy">
-    <h2 class="section-title">High Energy</h2>
-    <div class="grid">
+  <!-- ── PORTFOLIO ── -->
+  <section id="portfolio">
+    <p class="section-label">Selected Work</p>
+    <h2 class="section-heading">Portfolio</h2>
 
-      <!-- Card 1 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                  </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="card">
-        <div class="video-wrapper">
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                  </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
-        <div class="card">
-  <div class="video-wrapper">
-    <iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" 
-style="position:absolute;inset:0;width:100%;height:100%;border:none;" 
-allow="autoplay"></iframe>
-  </div>
-  <div class="card-info">
-    <h3>Video Title</h3>
-    <p>Artist / Info</p>
-  </div>
-</div>
-
-
-
-      <!-- Card 4 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
+    <div class="page-tabs">
+      <button class="page-tab active" onclick="switchPage('music', this)">Music Videos</button>
+      <button class="page-tab" onclick="switchPage('cinematic', this)">Cinematic Projects</button>
+      <button class="page-tab" onclick="switchPage('experimental', this)">Experimental</button>
     </div>
-  </section>
 
-  <!-- ══════════════════════════════════════
-       SECTION 3 — SLOW CINEMATIC
-  ══════════════════════════════════════ -->
-  <section class="section" id="cinematic">
-    <h2 class="section-title">Slow Cinematic</h2>
-    <div class="grid">
-
-      <!-- Card 1 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                  </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
+    <!-- ══ MUSIC VIDEOS ══ -->
+    <div class="panel active" id="panel-music">
+      <div class="category-tabs">
+        <button class="tab-btn active" onclick="switchCategory('trippy', this)">🌀 Trippy / Underground</button>
+        <button class="tab-btn" onclick="switchCategory('energy', this)">⚡ High Energy</button>
+        <button class="tab-btn" onclick="switchCategory('slowcin', this)">🎬 Slow Cinematic</button>
       </div>
 
-  <div class="card">
-  <div class="video-wrapper">
-    <iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe>
-  </div>
-  <div class="card-info">
-    <h3>Video Title</h3>
-    <p>Artist / Info</p>
-  </div>
-</div>
-
-
-      <!-- Card 3 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
+      <div class="filter-section active" id="cat-trippy">
+        <div class="grid">
+          <div class="card"><div class="video-wrapper"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
       </div>
 
-      <!-- Card 4 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
+      <div class="filter-section" id="cat-energy">
+        <div class="grid">
+          <div class="card"><div class="video-wrapper"><iframe style="position:absolute;inset:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><iframe style="position:absolute;inset:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
       </div>
 
-      <!-- Card 5 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
+      <div class="filter-section" id="cat-slowcin">
+        <div class="grid">
+          <div class="card"><div class="video-wrapper"><iframe style="position:absolute;inset:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay"></iframe></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+          <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
       </div>
-
-      <!-- Card 6 -->
-      <div class="card">
-        <div class="video-wrapper">
-          <!-- PASTE IFRAME HERE -->
-          <div class="placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            <span>Paste YouTube embed here</span>
-          </div>
-        </div>
-        <div class="card-info"><h3>Video Title</h3><p>Artist / Info</p></div>
-      </div>
-
     </div>
+
+    <!-- ══ CINEMATIC ══ -->
+    <div class="panel" id="panel-cinematic">
+      <div class="grid">
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Director / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Director / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Director / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Director / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Director / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      </div>
+    </div>
+
+    <!-- ══ EXPERIMENTAL ══ -->
+    <div class="panel" id="panel-experimental">
+      <div class="grid">
+        <div class="card"><div class="video-wrapper"><iframe style="position:absolute;inset:0;width:100%;height:100%;border:none;" src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="card-info"><h3>Project Title</h3><p>Description / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Description / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Description / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Description / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Description / Info</p></div></div>
+        <div class="card"><div class="video-wrapper"><div class="placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg><span>Paste embed here</span></div></div><div class="card-info"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      </div>
+    </div>
+
   </section>
 
   <script>
-    function showSection(id) {
-      // Hide all sections
-      document.querySelectorAll('.section').forEach(s => {
-        s.classList.remove('visible');
-        s.querySelector('.section-title').classList.remove('animate');
-      });
-
-      // Deactivate all buttons
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-
-      // Show selected section
-      const section = document.getElementById(id);
-      section.classList.add('visible');
-
-      // Activate clicked button
-      event.target.classList.add('active');
-
-      // Trigger title animation
-      setTimeout(() => {
-        section.querySelector('.section-title').classList.add('animate');
-      }, 50);
+    function switchPage(page, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.page-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + page).classList.add('active');
+      btn.classList.add('active');
     }
 
-    // Animate the first section title on load
-    window.addEventListener('load', () => {
+    function switchCategory(cat, btn) {
+      document.querySelectorAll('.filter-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('cat-' + cat).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function scrollToPortfolio(page) {
+      document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
       setTimeout(() => {
-        document.querySelector('.section.visible .section-title').classList.add('animate');
-      }, 200);
-    });
+        const tabs = document.querySelectorAll('.page-tab');
+        const pages = ['music', 'cinematic', 'experimental'];
+        const idx = pages.indexOf(page);
+        if (idx !== -1) switchPage(page, tabs[idx]);
+      }, 600);
+    }
   </script>
 
 </body>

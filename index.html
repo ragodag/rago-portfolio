@@ -4,7 +4,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>RAGO — Videographer & Director</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet"></noscript>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -619,59 +622,7 @@ body::before{
 .psbtn.sq{background:#7a1a1a;}
 .psbtn.tri{background:#550000;}
 
-/* ════════════════════════════
-   MODAL
-════════════════════════════ */
-#modal{
-  position:fixed;inset:0;z-index:2000;
-  background:rgba(10,0,0,0.96);
-  backdrop-filter:blur(16px);
-  display:none;
-  align-items:center;justify-content:center;
-}
-#modal.open{display:flex;}
-.modal-box{
-  width:min(88vw,1000px);
-  background:linear-gradient(135deg,#1a0000,#3a0000);
-  border:1px solid rgba(200,0,0,0.5);
-  border-radius:6px;
-  overflow:hidden;
-  box-shadow:0 0 80px rgba(180,0,0,0.6),0 0 160px rgba(120,0,0,0.3);
-  position:relative;
-}
-.modal-video{width:100%;aspect-ratio:16/9;background:#000;}
-.modal-video iframe{width:100%;height:100%;border:none;}
-.modal-meta{
-  padding:18px 22px;
-  display:flex;justify-content:space-between;align-items:center;
-  border-top:1px solid rgba(255,255,255,0.06);
-}
-.modal-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:14px;font-weight:700;letter-spacing:0.12em;
-}
-.modal-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;letter-spacing:0.06em;}
-.modal-close{
-  padding:8px 20px;
-  border:1px solid rgba(255,255,255,0.18);
-  border-radius:3px;
-  background:rgba(255,255,255,0.05);
-  color:rgba(255,255,255,0.65);
-  font-family:'Orbitron',sans-serif;
-  font-size:9px;letter-spacing:0.14em;
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.modal-close:hover{background:rgba(255,255,255,0.1);color:#fff;}
-/* corner deco */
-.modal-box .c{
-  position:absolute;width:12px;height:12px;
-  border-color:rgba(200,0,0,0.6);border-style:solid;
-}
-.modal-box .c.tl{top:0;left:0;border-width:2px 0 0 2px;}
-.modal-box .c.tr{top:0;right:0;border-width:2px 2px 0 0;}
-.modal-box .c.bl{bottom:0;left:0;border-width:0 0 2px 2px;}
-.modal-box .c.br{bottom:0;right:0;border-width:0 2px 2px 0;}
+/* old modal css removed */
 
 /* ════════════════════════════
    RESPONSIVE
@@ -870,10 +821,10 @@ body::before{
 <canvas id="bg-canvas"></canvas>
 
 <!-- ══ SPLASH ══ -->
-<div id="splash">
+<div id="splash" onclick="dismissSplash()" style="cursor:pointer;">
   <div class="splash-logo">RAGO</div>
   <div class="splash-sub">Press any key to continue</div>
-  <div class="splash-bar-wrap"><div class="splash-bar" id="splash-bar"></div></div>
+  <div class="splash-bar-wrap"><div class="splash-bar" id="splash-bar" style="transition:width 2.5s ease;"></div></div>
 </div>
 
 <!-- ══ TOP BAR ══ -->
@@ -1143,6 +1094,30 @@ body::before{
 </div>
 
 <script>
+/* ── SPLASH DISMISS (global so inline onclick works) ── */
+var _splashDone = false;
+function dismissSplash() {
+  if (_splashDone) return;
+  _splashDone = true;
+  var s = document.getElementById('splash');
+  s.style.transition = 'opacity 0.5s';
+  s.style.opacity = '0';
+  s.style.pointerEvents = 'none';
+  setTimeout(function() {
+    s.style.display = 'none';
+    var tb = document.getElementById('topbar');
+    var ht = document.getElementById('hero-text');
+    var hi = document.getElementById('hero-image');
+    if (tb) tb.classList.add('visible');
+    if (ht) ht.classList.add('visible');
+    if (hi) hi.classList.add('visible');
+  }, 550);
+}
+// Auto-dismiss after 3s no matter what
+setTimeout(dismissSplash, 3000);
+document.addEventListener('keydown', dismissSplash);
+document.addEventListener('click', dismissSplash);
+
 /* ── CLOCK ── */
 function tick(){const n=new Date();document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
 tick();setInterval(tick,15000);
@@ -1168,24 +1143,7 @@ tick();setInterval(tick,15000);
   frame();
 })();
 
-/* ── SPLASH ── */
-(function(){
-  const bar=document.getElementById('splash-bar');
-  const splash=document.getElementById('splash');
-  setTimeout(()=>bar.style.width='100%',50);
-  function dismiss(){
-    splash.classList.add('hidden');
-    setTimeout(()=>{
-      splash.style.display='none';
-      document.getElementById('topbar').classList.add('visible');
-      document.getElementById('hero-text').classList.add('visible');
-      document.getElementById('hero-image').classList.add('visible');
-    },800);
-  }
-  setTimeout(dismiss,2400);
-  document.addEventListener('keydown',dismiss,{once:true});
-  splash.addEventListener('click',dismiss,{once:true});
-})();
+/* splash handled by global dismissSplash() above */
 
 /* ── SHELF FOCUS ── */
 const focusState={};

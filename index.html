@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewportQA content="width=device-width, initial-scale=1.0"/>
 <title>RAGO — Videographer & Director</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +20,8 @@
   --white:#fff0f0;
   --dim:rgba(255,220,220,0.55);
   --glow:rgba(200,0,0,0.4);
-  --tile-w:200px;
-  --tile-h:113px;
+  --tile-w:300px;
+  --tile-h:169px;
 }
 
 html{scroll-behavior:smooth;}
@@ -430,7 +430,7 @@ body::before{
 }
 .shelf{
   display:flex;
-  gap:14px;
+  gap:16px;
   transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1);
   will-change:transform;
 }
@@ -453,7 +453,8 @@ body::before{
   transition:all 0.3s;
 }
 .tile-inner iframe{
-  position:absolute;inset:0;
+  position:absolute;
+  top:0;left:0;
   width:100%;height:100%;
   border:none;pointer-events:none;
 }
@@ -482,7 +483,7 @@ body::before{
 }
 .tile-label{margin-top:7px;padding:0 2px;}
 .tile-label h3{
-  font-size:11.5px;font-weight:600;
+  font-size:13px;font-weight:600;
   color:rgba(255,255,255,0.6);
   letter-spacing:0.05em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -494,19 +495,44 @@ body::before{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
+/* ── UNFOCUSED DIM ── */
+.tile .tile-inner::before{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:3;pointer-events:none;
+  transition:opacity 0.3s;
+}
+.tile.focused .tile-inner::before{opacity:0;}
+
+/* ── PLAY BUTTON OVERLAY ── */
+.tile-play-btn{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  z-index:4;pointer-events:none;
+  opacity:0;transition:opacity 0.25s;
+}
+.tile.focused .tile-play-btn{opacity:1;}
+.tile-play-btn::after{
+  content:'\25B6';
+  font-size:32px;
+  color:rgba(255,255,255,0.95);
+  text-shadow:0 0 24px rgba(255,60,60,0.9),0 2px 8px rgba(0,0,0,0.9);
+}
+
 /* ── FOCUSED ── */
-.tile.focused{transform:translateY(-6px);}
+.tile.focused{transform:translateY(-8px) scale(1.04);}
 .tile.focused .tile-inner{
-  border-color:rgba(255,80,80,0.85);
+  border-color:rgba(255,80,80,0.9);
   box-shadow:
-    0 0 0 1px rgba(220,0,0,0.4),
-    0 0 24px rgba(200,0,0,0.6),
-    0 12px 40px rgba(0,0,0,0.7);
+    0 0 0 1px rgba(220,0,0,0.5),
+    0 0 30px rgba(200,0,0,0.7),
+    0 16px 48px rgba(0,0,0,0.8);
 }
 .tile.focused .tile-inner::after{
   content:'';
   position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(220,0,0,0.12) 0%,transparent 60%);
+  background:linear-gradient(to bottom,rgba(220,0,0,0.15) 0%,transparent 50%);
   pointer-events:none;z-index:2;
 }
 .tile.focused .tile-label h3{color:#fff;}
@@ -929,12 +955,12 @@ body::before{
 
     <div class="cat-section active" id="cat-trippy">
       <div class="shelf-outer"><div class="shelf" id="shelf-trippy">
-        <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
       <div class="detail-panel show" id="dp-trippy">
         <div class="detail-info"><div class="detail-name" id="dn-trippy">Video Title</div><div class="detail-sub" id="ds-trippy">Artist / Info</div></div>
@@ -944,12 +970,12 @@ body::before{
 
     <div class="cat-section" id="cat-energy">
       <div class="shelf-outer"><div class="shelf" id="shelf-energy">
-        <div class="tile focused" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
       <div class="detail-panel show" id="dp-energy">
         <div class="detail-info"><div class="detail-name" id="dn-energy">Video Title</div><div class="detail-sub" id="ds-energy">Artist / Info</div></div>
@@ -959,12 +985,12 @@ body::before{
 
     <div class="cat-section" id="cat-slowcin">
       <div class="shelf-outer"><div class="shelf" id="shelf-slowcin">
-        <div class="tile focused" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
       <div class="detail-panel show" id="dp-slowcin">
         <div class="detail-info"><div class="detail-name" id="dn-slowcin">Video Title</div><div class="detail-sub" id="ds-slowcin">Artist / Info</div></div>
@@ -976,12 +1002,12 @@ body::before{
   <!-- ══ CINEMATIC ══ -->
   <div class="pg-panel" id="panel-cinematic">
     <div class="shelf-outer"><div class="shelf" id="shelf-cinematic">
-      <div class="tile focused" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile focused" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
     </div></div>
     <div class="detail-panel show" id="dp-cinematic">
       <div class="detail-info"><div class="detail-name" id="dn-cinematic">Project Title</div><div class="detail-sub" id="ds-cinematic">Director / Info</div></div>
@@ -992,12 +1018,12 @@ body::before{
   <!-- ══ EXPERIMENTAL ══ -->
   <div class="pg-panel" id="panel-experimental">
     <div class="shelf-outer"><div class="shelf" id="shelf-experimental">
-      <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
-      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
     </div></div>
     <div class="detail-panel show" id="dp-experimental">
       <div class="detail-info"><div class="detail-name" id="dn-experimental">Project Title</div><div class="detail-sub" id="ds-experimental">Description / Info</div></div>
@@ -1096,173 +1122,181 @@ body::before{
 </div>
 
 <script>
-/* ── SPLASH DISMISS (global so inline onclick works) ── */
-var _splashDone = false;
-function dismissSplash() {
-  if (_splashDone) return;
-  _splashDone = true;
-  var s = document.getElementById('splash');
-  s.style.transition = 'opacity 0.5s';
-  s.style.opacity = '0';
-  s.style.pointerEvents = 'none';
-  setTimeout(function() {
-    s.style.display = 'none';
-    var tb = document.getElementById('topbar');
-    var ht = document.getElementById('hero-text');
-    var hi = document.getElementById('hero-image');
-    if (tb) tb.classList.add('visible');
-    if (ht) ht.classList.add('visible');
-    if (hi) hi.classList.add('visible');
-  }, 550);
-}
-// Auto-dismiss after 3s no matter what
-setTimeout(dismissSplash, 3000);
-document.addEventListener('keydown', dismissSplash);
-document.addEventListener('click', dismissSplash);
-
 /* ── CLOCK ── */
-function tick(){const n=new Date();document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
-tick();setInterval(tick,15000);
+function tick() {
+  var n = new Date();
+  var el = document.getElementById('clock');
+  if (el) el.textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+}
+tick();
+setInterval(tick, 15000);
 
-/* ── PARTICLES BG ── */
-(function(){
-  const c=document.getElementById('bg-canvas');
-  const ctx=c.getContext('2d');
-  let W,H,pts=[];
-  function sz(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
-  sz();window.addEventListener('resize',sz);
-  for(let i=0;i<100;i++)pts.push({x:Math.random()*3000,y:Math.random()*1200,r:Math.random()*1.6+0.2,vy:Math.random()*0.35+0.08,vx:0,a:Math.random()*0.45+0.08});
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
-      ctx.beginPath();ctx.arc(p.x%W,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,100,100,${p.a})`;ctx.fill();
-      p.y-=p.vy;p.vx=Math.sin(p.y*0.015)*0.25;p.x+=p.vx;
-      if(p.y<-4){p.y=H+4;p.x=Math.random()*W;}
+/* ── PARTICLES ── */
+(function() {
+  var c = document.getElementById('bg-canvas');
+  if (!c) return;
+  var ctx = c.getContext('2d');
+  var W, H, pts = [];
+  function sz() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+  sz();
+  window.addEventListener('resize', sz);
+  for (var i = 0; i < 80; i++) {
+    pts.push({ x: Math.random() * 2000, y: Math.random() * 1000, r: Math.random() * 1.5 + 0.2, vy: Math.random() * 0.3 + 0.08, vx: 0, a: Math.random() * 0.4 + 0.08 });
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach(function(p) {
+      ctx.beginPath(); ctx.arc(p.x % W, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,80,80,' + p.a + ')'; ctx.fill();
+      p.y -= p.vy; p.vx = Math.sin(p.y * 0.015) * 0.25; p.x += p.vx;
+      if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
     });
     requestAnimationFrame(frame);
   }
   frame();
 })();
 
-
-
 /* ── SHELF FOCUS ── */
-const focusState={};
+var focusState = {};
+var activeShelfId = 'shelf-trippy';
+var _activeCat = 'trippy';
 
-function focusTile(shelfId,idx){
-  const shelf=document.getElementById(shelfId);
-  if(!shelf)return;
-  const tiles=[...shelf.querySelectorAll('.tile')];
-  tiles.forEach((t,i)=>t.classList.toggle('focused',i===idx));
-  focusState[shelfId]=idx;
-  // update detail panel
-  const t=tiles[idx];
-  if(!t)return;
-  const cat=shelfId.replace('shelf-','');
-  const dn=document.getElementById('dn-'+cat);
-  const ds=document.getElementById('ds-'+cat);
-  if(dn)dn.textContent=t.dataset.title||'Video Title';
-  if(ds)ds.textContent=t.dataset.sub||'—';
-  // slide shelf
-  const outer=shelf.parentElement;
-  const off=t.offsetLeft-(outer.clientWidth/2)+(t.offsetWidth/2);
-  shelf.style.transform=`translateX(${-Math.max(0,off)}px)`;
+function focusTile(shelfId, idx) {
+  var shelf = document.getElementById(shelfId);
+  if (!shelf) return;
+  var tiles = shelf.querySelectorAll('.tile');
+  tiles.forEach(function(t, i) { t.classList.toggle('focused', i === idx); });
+  focusState[shelfId] = idx;
+  var t = tiles[idx];
+  if (!t) return;
+  var cat = shelfId.replace('shelf-', '');
+  var dn = document.getElementById('dn-' + cat);
+  var ds = document.getElementById('ds-' + cat);
+  if (dn) dn.textContent = t.dataset.title || 'Video Title';
+  if (ds) ds.textContent = t.dataset.sub || '';
+  var outer = shelf.parentElement;
+  var off = t.offsetLeft - (outer.clientWidth / 2) + (t.offsetWidth / 2);
+  shelf.style.transform = 'translateX(' + (-Math.max(0, off)) + 'px)';
 }
 
-// attach hover to all tiles
-document.querySelectorAll('.tile').forEach(t=>{
-  t.addEventListener('mouseenter',()=>{
-    const shelf=t.closest('.shelf');
-    if(!shelf)return;
-    const tiles=[...shelf.querySelectorAll('.tile')];
-    focusTile(shelf.id,tiles.indexOf(t));
+/* ── TILE CLICK & HOVER ── */
+document.querySelectorAll('.tile').forEach(function(t) {
+  t.addEventListener('mouseenter', function() {
+    var shelf = t.closest('.shelf');
+    if (!shelf) return;
+    var tiles = Array.from(shelf.querySelectorAll('.tile'));
+    focusTile(shelf.id, tiles.indexOf(t));
   });
-  t.addEventListener('click',()=>{
-    if(t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub);
+  t.addEventListener('click', function() {
+    if (t.dataset.embed) {
+      openModal(t.dataset.embed, t.dataset.title, t.dataset.sub);
+    }
   });
 });
 
 /* ── KEYBOARD ── */
-let activeShelfId='shelf-trippy';
-document.addEventListener('keydown',e=>{
-  if(document.getElementById('modal').classList.contains('open')){if(e.key==='Escape')closeModal();return;}
-  const shelf=document.getElementById(activeShelfId);
-  if(!shelf)return;
-  const tiles=[...shelf.querySelectorAll('.tile')];
-  const idx=focusState[activeShelfId]||0;
-  if(e.key==='ArrowRight')focusTile(activeShelfId,Math.min(idx+1,tiles.length-1));
-  if(e.key==='ArrowLeft')focusTile(activeShelfId,Math.max(idx-1,0));
-  if(e.key==='Enter'||e.key===' '){const t=tiles[focusState[activeShelfId]||0];if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub);}
+document.addEventListener('keydown', function(e) {
+  var modal = document.getElementById('modal');
+  if (modal && modal.classList.contains('open')) {
+    if (e.key === 'Escape') closeModal();
+    return;
+  }
+  var shelf = document.getElementById(activeShelfId);
+  if (!shelf) return;
+  var tiles = shelf.querySelectorAll('.tile');
+  var idx = focusState[activeShelfId] || 0;
+  if (e.key === 'ArrowRight') focusTile(activeShelfId, Math.min(idx + 1, tiles.length - 1));
+  if (e.key === 'ArrowLeft') focusTile(activeShelfId, Math.max(idx - 1, 0));
+  if (e.key === 'Enter' || e.key === ' ') {
+    var t = tiles[focusState[activeShelfId] || 0];
+    if (t && t.dataset.embed) openModal(t.dataset.embed, t.dataset.title, t.dataset.sub);
+  }
 });
 
-/* ── PAGE / CAT SWITCHING ── */
-function switchPage(page,el){ _activeCat=page==='music'?'trippy':page;
-  document.querySelectorAll('.pg-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.pg-tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+page).classList.add('active');
-  el.classList.add('active');
-  const shelfMap={music:'shelf-trippy',cinematic:'shelf-cinematic',experimental:'shelf-experimental'};
-  activeShelfId=shelfMap[page]||'shelf-trippy';
-  focusTile(activeShelfId,0);
+/* ── PAGE SWITCHING ── */
+function switchPage(page, el) {
+  _activeCat = page === 'music' ? 'trippy' : page;
+  document.querySelectorAll('.pg-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.pg-tab').forEach(function(b) { b.classList.remove('active'); });
+  var panel = document.getElementById('panel-' + page);
+  if (panel) panel.classList.add('active');
+  if (el) el.classList.add('active');
+  var shelfMap = { music: 'shelf-trippy', cinematic: 'shelf-cinematic', experimental: 'shelf-experimental' };
+  activeShelfId = shelfMap[page] || 'shelf-trippy';
+  focusTile(activeShelfId, 0);
 }
 
-function switchCat(cat,el){ _activeCat=cat;
-  document.querySelectorAll('#panel-music .cat-section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('cat-'+cat).classList.add('active');
-  el.classList.add('active');
-  activeShelfId='shelf-'+cat;
-  const s=document.getElementById(activeShelfId);
-  if(s)s.style.transform='';
-  focusTile(activeShelfId,0);
+/* ── CAT SWITCHING ── */
+function switchCat(cat, el) {
+  _activeCat = cat;
+  document.querySelectorAll('#panel-music .cat-section').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.cat-tab').forEach(function(b) { b.classList.remove('active'); });
+  var sec = document.getElementById('cat-' + cat);
+  if (sec) sec.classList.add('active');
+  if (el) el.classList.add('active');
+  activeShelfId = 'shelf-' + cat;
+  var shelf = document.getElementById(activeShelfId);
+  if (shelf) shelf.style.transform = '';
+  focusTile(activeShelfId, 0);
 }
 
-function goToPortfolio(page){
-  document.getElementById('portfolio').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{
-    const tabs=[...document.querySelectorAll('.pg-tab')];
-    const map={music:0,cinematic:1,experimental:2};
-    if(map[page]!==undefined)switchPage(page,tabs[map[page]]);
-  },700);
+/* ── SCROLL TO PORTFOLIO ── */
+function goToPortfolio(page) {
+  var port = document.getElementById('portfolio');
+  if (port) port.scrollIntoView({ behavior: 'smooth' });
+  setTimeout(function() {
+    var tabs = document.querySelectorAll('.pg-tab');
+    var map = { music: 0, cinematic: 1, experimental: 2 };
+    if (map[page] !== undefined && tabs[map[page]]) {
+      switchPage(page, tabs[map[page]]);
+    }
+  }, 700);
 }
 
 /* ── MODAL ── */
-// SC category descriptions
-const scDescs={
-  'trippy':'An underground visual journey — hypnotic textures and psychedelic movement captured through RAGO's lens.',
-  'energy':'High-octane direction. Raw energy translated into kinetic visuals that hit as hard as the track.',
-  'slowcin':'Slow-burn cinematic storytelling. Every frame considered, every cut intentional.',
-  'cinematic':'A short-form visual work pushing the boundaries of narrative filmmaking.',
-  'experimental':'Boundary-pushing visual exploration — form, light, and motion as pure language.',
+var scDescs = {
+  trippy: "An underground visual journey — hypnotic textures and psychedelic movement captured through RAGO's lens.",
+  energy: "High-octane direction. Raw energy translated into kinetic visuals that hit as hard as the track.",
+  slowcin: "Slow-burn cinematic storytelling. Every frame considered, every cut intentional.",
+  cinematic: "A short-form visual work pushing the boundaries of narrative filmmaking.",
+  experimental: "Boundary-pushing visual exploration — form, light, and motion as pure language."
 };
-let _activeCat='trippy';
-function openModal(embed,title,sub,cat){
-  cat=cat||_activeCat;
-  document.getElementById('modal-iframe').src=embed+(embed.includes('?')?'&':'?')+'autoplay=1';
-  document.getElementById('modal-title').textContent=(title||'Video Title').toUpperCase();
-  document.getElementById('sc-stat-title').textContent=title||'—';
-  document.getElementById('sc-stat-artist').textContent=sub||'—';
-  document.getElementById('sc-stat-cat').textContent=cat.toUpperCase();
-  document.getElementById('sc-desc').textContent=scDescs[cat]||scDescs['cinematic'];
+
+function openModal(embed, title, sub) {
+  var cat = _activeCat || 'cinematic';
+  var sep = embed.includes('?') ? '&' : '?';
+  document.getElementById('modal-iframe').src = embed + sep + 'autoplay=1';
+  document.getElementById('modal-title').textContent = (title || 'Video Title').toUpperCase();
+  document.getElementById('sc-stat-title').textContent = title || '—';
+  document.getElementById('sc-stat-artist').textContent = sub || '—';
+  document.getElementById('sc-stat-cat').textContent = cat.toUpperCase();
+  var desc = document.getElementById('sc-desc');
+  if (desc) desc.textContent = scDescs[cat] || scDescs.cinematic;
   document.getElementById('modal').classList.add('open');
 }
-function playFocused(shelfId){
-  const idx=focusState[shelfId]||0;
-  const shelf=document.getElementById(shelfId);
-  if(!shelf)return;
-  const t=shelf.querySelectorAll('.tile')[idx];
-  if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub);
-}
-function closeModal(){
-  document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-iframe').src='';
-}
-function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
-/* ── INIT FOCUS ── */
-['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(id=>focusTile(id,0));
-activeShelfId='shelf-trippy';
+function playFocused(shelfId) {
+  var idx = focusState[shelfId] || 0;
+  var shelf = document.getElementById(shelfId);
+  if (!shelf) return;
+  var t = shelf.querySelectorAll('.tile')[idx];
+  if (t && t.dataset.embed) openModal(t.dataset.embed, t.dataset.title, t.dataset.sub);
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modal-iframe').src = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+/* ── INIT ── */
+['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id) {
+  focusTile(id, 0);
+});
+activeShelfId = 'shelf-trippy';
 </script>
 </body>
 </html>

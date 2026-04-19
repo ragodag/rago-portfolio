@@ -48,39 +48,7 @@ body::before{
 /* ══ SECTIONS ══ */
 .page{position:relative;z-index:1;}
 
-/* ════════════════════════════
-   BOOT / SPLASH SCREEN
-════════════════════════════ */
-#splash{
-  position:fixed;inset:0;z-index:10000;
-  background:#000;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:24px;
-  transition:opacity 0.8s ease;
-}
-#splash.hidden{opacity:0;pointer-events:none;}
-.splash-logo{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(3rem,10vw,7rem);
-  font-weight:900;
-  letter-spacing:0.3em;
-  color:#fff;
-  text-shadow:0 0 40px rgba(200,0,0,0.9),0 0 80px rgba(150,0,0,0.5);
-  animation:pulseGlow 2s ease-in-out infinite;
-}
-.splash-sub{
-  font-size:0.9rem;
-  letter-spacing:0.4em;
-  color:rgba(255,255,255,0.4);
-  text-transform:uppercase;
-  animation:blink 1.2s step-end infinite;
-}
-.splash-bar-wrap{width:240px;height:2px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-top:16px;}
-.splash-bar{height:100%;width:0;background:linear-gradient(90deg,#cc0000,#ff2222);transition:width 2s ease;}
-
-@keyframes pulseGlow{0%,100%{text-shadow:0 0 40px rgba(200,0,0,0.9),0 0 80px rgba(150,0,0,0.5);}50%{text-shadow:0 0 60px rgba(220,0,0,1),0 0 120px rgba(180,0,0,0.7);}}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+50%{opacity:0;}}
 
 /* ════════════════════════════
    NAV / TOP BAR
@@ -93,10 +61,9 @@ body::before{
   background:rgba(20,0,0,0.75);
   backdrop-filter:blur(16px);
   border-bottom:1px solid rgba(180,0,0,0.2);
-  opacity:0;transform:translateY(-10px);
-  transition:opacity 0.6s 0.5s, transform 0.6s 0.5s;
+  opacity:1;transform:translateY(0);
 }
-#topbar.visible{opacity:1;transform:translateY(0);}
+
 
 .tb-left{display:flex;align-items:center;gap:20px;}
 .ps-sym{
@@ -180,10 +147,9 @@ body::before{
 
 .hero-text{
   position:relative;
-  opacity:0;transform:translateX(-30px);
-  transition:opacity 0.8s 0.8s, transform 0.8s 0.8s;
+  opacity:1;transform:translateX(0);
 }
-.hero-text.visible{opacity:1;transform:translateX(0);}
+
 
 .hero-eyebrow{
   display:flex;align-items:center;gap:12px;
@@ -281,10 +247,9 @@ body::before{
 /* ── HERO IMAGE ── */
 .hero-image{
   position:relative;
-  opacity:0;transform:translateX(30px);
-  transition:opacity 0.8s 1s, transform 0.8s 1s;
+  opacity:1;transform:translateX(0);
 }
-.hero-image.visible{opacity:1;transform:translateX(0);}
+
 .hero-image-frame{
   position:relative;
   width:100%;
@@ -814,18 +779,55 @@ body::before{
   margin-top:auto;
 }
 
+
+/* ── SPLASH (pure CSS, no JS needed) ── */
+#splash{
+  position:fixed;inset:0;z-index:10000;
+  background:#000;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:24px;
+  animation:splashOut 0.6s ease 2.8s forwards;
+  pointer-events:none;
+}
+@keyframes splashOut{
+  0%{opacity:1;pointer-events:none;}
+  100%{opacity:0;display:none;pointer-events:none;}
+}
+.splash-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(3rem,10vw,7rem);
+  font-weight:900;
+  letter-spacing:0.3em;
+  color:#fff;
+  text-shadow:0 0 40px rgba(200,0,0,0.9),0 0 80px rgba(150,0,0,0.5);
+  animation:pulseGlow 2s ease-in-out infinite;
+}
+.splash-sub{
+  font-size:0.9rem;
+  letter-spacing:0.4em;
+  color:rgba(255,255,255,0.4);
+  text-transform:uppercase;
+  animation:blink 1.2s step-end infinite;
+}
+.splash-bar-wrap{width:240px;height:2px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-top:8px;}
+.splash-bar{height:100%;width:0;background:linear-gradient(90deg,#cc0000,#ff2222);animation:loadBar 2.5s ease forwards;}
+@keyframes loadBar{to{width:100%;}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
 </style>
 </head>
 <body>
 
 <canvas id="bg-canvas"></canvas>
 
-<!-- ══ SPLASH ══ -->
-<div id="splash" onclick="dismissSplash()" style="cursor:pointer;">
+<!-- SPLASH -->
+<div id="splash">
   <div class="splash-logo">RAGO</div>
-  <div class="splash-sub">Press any key to continue</div>
-  <div class="splash-bar-wrap"><div class="splash-bar" id="splash-bar" style="transition:width 2.5s ease;"></div></div>
+  <div class="splash-sub">Loading...</div>
+  <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
 </div>
+
 
 <!-- ══ TOP BAR ══ -->
 <nav id="topbar">
@@ -1143,7 +1145,7 @@ tick();setInterval(tick,15000);
   frame();
 })();
 
-/* splash handled by global dismissSplash() above */
+
 
 /* ── SHELF FOCUS ── */
 const focusState={};

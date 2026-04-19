@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewportQA content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>RAGO — Videographer & Director</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,13 +34,7 @@ body{
   cursor:default;
 }
 
-/* ══ SCANLINE OVERLAY ══ */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.03) 3px,rgba(0,0,0,0.03) 4px);
-  pointer-events:none;z-index:9999;
-}
+
 
 /* ══ GLOBAL BG ══ */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
@@ -700,15 +694,17 @@ body::before{
   position:relative;
   width:100%;aspect-ratio:16/9;
   background:#000;
-  border:1px solid rgba(200,0,0,0.4);
+  border:1px solid rgba(200,0,0,0.3);
   border-radius:3px;
   overflow:hidden;
 }
-.sc-vid-frame iframe{width:100%;height:100%;border:none;position:relative;z-index:1;}
-.sc-vid-scanline{
-  position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);
+.sc-vid-frame iframe{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;
+  border:none;display:block;
+  z-index:1;
 }
+
 .sc-vid-corners{position:absolute;inset:0;z-index:3;pointer-events:none;}
 .sc-c{position:absolute;width:14px;height:14px;border-color:rgba(220,60,60,0.8);border-style:solid;}
 .sc-c.tl{top:0;left:0;border-width:2px 0 0 2px;}
@@ -1065,8 +1061,8 @@ body::before{
             <span class="sc-c tl"></span><span class="sc-c tr"></span>
             <span class="sc-c bl"></span><span class="sc-c br"></span>
           </div>
-          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-          <div class="sc-vid-scanline"></div>
+          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen" style="width:100%;height:100%;border:none;display:block;"></iframe>
+          
         </div>
         <div class="sc-nameplate">
           <div class="sc-nameplate-inner">
@@ -1264,8 +1260,17 @@ var scDescs = {
 
 function openModal(embed, title, sub) {
   var cat = _activeCat || 'cinematic';
-  var sep = embed.includes('?') ? '&' : '?';
-  document.getElementById('modal-iframe').src = embed + sep + 'autoplay=1';
+  // Google Drive preview links work as-is, YouTube needs autoplay param
+  var finalSrc = embed;
+  if (embed.includes('youtube.com') || embed.includes('youtu.be')) {
+    var sep = embed.includes('?') ? '&' : '?';
+    finalSrc = embed + sep + 'autoplay=1&rel=0';
+  }
+  // For Google Drive, ensure it uses the correct preview format
+  if (embed.includes('drive.google.com')) {
+    finalSrc = embed.replace('/view', '/preview').replace('&autoplay=1','').replace('?autoplay=1','');
+  }
+  document.getElementById('modal-iframe').src = finalSrc;
   document.getElementById('modal-title').textContent = (title || 'Video Title').toUpperCase();
   document.getElementById('sc-stat-title').textContent = title || '—';
   document.getElementById('sc-stat-artist').textContent = sub || '—';

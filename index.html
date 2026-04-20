@@ -144,36 +144,68 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-left{padding:20px;border-right:1px solid rgba(200,0,0,0.25);display:flex;flex-direction:column;gap:12px;background:rgba(0,0,0,0.3);}
 
 /*
-  ── THE VIDEO FRAME ──
-  .sc-vid-frame is a strict 16:9 clipping box (overflow:hidden).
-  The iframe inside is made taller than the box and shifted up
-  by JS to hide Drive's toolbar. For YouTube, top=0 / height=100%.
+  ── MODAL VIDEO FRAME ──
+  For Drive iframes: we use a container that is taller than the
+  visible 16:9 box, then clip it. The extra height at the top
+  hides Drive's toolbar. No JS pixel math needed.
+
+  Outer .sc-vid-clip = the visible 16:9 window (overflow:hidden)
+  Inner .sc-vid-frame = taller box that shifts the iframe UP
+  
+  For YouTube: no toolbar, iframe fills 100% of the clip box directly.
+  We toggle class "is-drive" on .sc-vid-clip to switch modes.
 */
-.sc-vid-frame{
-  position:relative;
-  width:100%;
-  padding-bottom:56.25%;
-  height:0;
-  background:#000;
-  border:1px solid rgba(200,0,0,0.3);
-  border-radius:3px;
-  overflow:hidden;
-}
-#modal-iframe{
-  position:absolute;
-  left:0;
-  width:100%;
-  border:none;
-  display:block;
-  /* top and height set dynamically by JS */
-  top:0;
-  height:100%;
+
+/* The visible clipping window — always 16:9 */
+.sc-vid-clip {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(200,0,0,0.3);
+  border-radius: 3px;
+  background: #000;
 }
 
-.sc-vid-corners{position:absolute;inset:0;z-index:3;pointer-events:none;}
+/* Corner decoration sits on top of everything */
+.sc-vid-corners {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
 .sc-c{position:absolute;width:14px;height:14px;border-color:rgba(220,60,60,0.8);border-style:solid;}
 .sc-c.tl{top:0;left:0;border-width:2px 0 0 2px;}.sc-c.tr{top:0;right:0;border-width:2px 2px 0 0;}
 .sc-c.bl{bottom:0;left:0;border-width:0 0 2px 2px;}.sc-c.br{bottom:0;right:0;border-width:0 2px 2px 0;}
+
+/*
+  YouTube mode (default): iframe fills the clip box exactly.
+*/
+#modal-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/*
+  Drive mode: we shift the iframe up to hide the toolbar.
+  The toolbar is roughly 13% of the iframe height on mobile,
+  slightly less on desktop. We overshoot to ~15% to be safe.
+  The clip box hides everything above its top edge.
+
+  Technique: make the iframe start above the clip box (negative top),
+  and make it taller to compensate so the bottom isn't cut.
+*/
+.sc-vid-clip.is-drive #modal-iframe {
+  top: -15%;
+  height: 130%;
+}
+
 .sc-nameplate{background:rgba(180,0,0,0.15);border:1px solid rgba(200,0,0,0.35);border-radius:24px;padding:8px 16px;}
 .sc-nameplate-inner{display:flex;align-items:center;gap:10px;}
 .sc-nameplate-icon{width:28px;height:28px;border-radius:50%;background:rgba(180,0,0,0.3);border:1px solid rgba(200,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,120,120,0.9);flex-shrink:0;}
@@ -315,10 +347,9 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     <div class="cat-section active" id="cat-trippy">
       <div class="shelf-outer"><div class="shelf" id="shelf-trippy">
         <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/yP_ge27GyFg?si=YWO5rRh5cwOvGzMr" data-title="New Trippy Visual" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/yP_ge27GyFg?si=YWO5rRh5cwOvGzMr" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>New Trippy Visual</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
       <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-trippy">Video Title</div><div class="detail-sub" id="ds-trippy">Artist / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-trippy','trippy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
@@ -434,7 +465,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     </div>
     <div class="sc-body">
       <div class="sc-left">
-        <div class="sc-vid-frame" id="sc-vid-frame">
+        <!-- sc-vid-clip is the visible 16:9 window; "is-drive" class shifts iframe up to hide toolbar -->
+        <div class="sc-vid-clip" id="sc-vid-clip">
           <div class="sc-vid-corners"><span class="sc-c tl"></span><span class="sc-c tr"></span><span class="sc-c bl"></span><span class="sc-c br"></span></div>
           <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
         </div>
@@ -561,39 +593,8 @@ function switchCat(cat,el){
   setTimeout(scaleTileIframes,50);
 }
 
-/* ────────────────────────────────────────────────
-   MODAL — Drive toolbar clipping
-   
-   Google Drive's /preview iframe renders a toolbar
-   at the top. Its height in CSS pixels depends on
-   the rendered width of the frame (Drive is responsive).
-   
-   We measure the frame AFTER the modal renders, then:
-   • shift the iframe UP by toolbar height (hides toolbar above clip edge)
-   • extend iframe HEIGHT by same amount (so bottom isn't cut)
-   • parent has overflow:hidden so toolbar is invisible
-   
-   YouTube: no toolbar, so top=0 height=100% always.
-──────────────────────────────────────────────── */
-var _currentEmbed = '';
-
-function driveToolbarPx(frameWidth){
-  /* Empirically measured Drive toolbar heights at various iframe widths.
-     These values account for iOS Safari's viewport scaling. */
-  if(frameWidth < 420) return 46;   /* narrow mobile          */
-  if(frameWidth < 640) return 50;   /* standard mobile/tablet */
-  if(frameWidth < 960) return 56;   /* large tablet / desktop modal */
-  return 60;                         /* wide desktop           */
-}
-
-function applyDriveOffset(){
-  var frame  = document.getElementById('sc-vid-frame');
-  var iframe = document.getElementById('modal-iframe');
-  if(!frame||!iframe)return;
-  var t = driveToolbarPx(frame.offsetWidth);
-  iframe.style.top    = '-'+t+'px';
-  iframe.style.height = 'calc(100% + '+t+'px)';
-}
+/* ── MODAL ── */
+var _currentEmbed='';
 
 var scDescs={
   trippy:"An underground visual journey — hypnotic textures and psychedelic movement captured through RAGO's lens.",
@@ -604,48 +605,41 @@ var scDescs={
 };
 
 function openModal(embed,title,sub,cat){
-  var iframe = document.getElementById('modal-iframe');
-  _currentEmbed = embed;
+  var iframe=document.getElementById('modal-iframe');
+  var clip=document.getElementById('sc-vid-clip');
+  _currentEmbed=embed;
 
-  var isDrive = embed.includes('drive.google.com');
+  var isDrive=embed.includes('drive.google.com');
 
-  /* Reset to safe defaults before loading new src */
-  iframe.style.top    = '0';
-  iframe.style.height = '100%';
-  iframe.src = '';
-
+  /* Toggle CSS class — Drive mode shifts iframe up to hide toolbar */
   if(isDrive){
-    iframe.src = embed; /* already a /preview URL */
-    /* Let the modal paint, then apply pixel-perfect offset */
-    requestAnimationFrame(function(){
-      requestAnimationFrame(applyDriveOffset);
-    });
+    clip.classList.add('is-drive');
+    iframe.src=embed;
   } else {
-    var src = embed;
+    clip.classList.remove('is-drive');
+    var src=embed;
     if(embed.includes('youtube.com')||embed.includes('youtu.be')){
-      src = embed + (embed.includes('?')?'&':'?') + 'autoplay=1&rel=0';
+      src=embed+(embed.includes('?')?'&':'?')+'autoplay=1&rel=0';
     }
-    iframe.src = src;
+    iframe.src=src;
   }
 
-  document.getElementById('modal-title').textContent   = (title||'Video Title').toUpperCase();
-  document.getElementById('sc-stat-title').textContent  = title||'—';
-  document.getElementById('sc-stat-artist').textContent = sub||'—';
-  document.getElementById('sc-stat-cat').textContent    = (cat||'cinematic').toUpperCase();
+  document.getElementById('modal-title').textContent=(title||'Video Title').toUpperCase();
+  document.getElementById('sc-stat-title').textContent=title||'—';
+  document.getElementById('sc-stat-artist').textContent=sub||'—';
+  document.getElementById('sc-stat-cat').textContent=(cat||'cinematic').toUpperCase();
   var desc=document.getElementById('sc-desc');
   if(desc)desc.textContent=scDescs[cat]||scDescs.cinematic;
   document.getElementById('modal').classList.add('open');
 }
 
 function replayModal(){
-  var iframe=document.getElementById('modal-iframe'),s=iframe.src;
-  iframe.src='';
-  setTimeout(function(){
-    iframe.src=s;
-    if(_currentEmbed.includes('drive.google.com')){
-      requestAnimationFrame(function(){requestAnimationFrame(applyDriveOffset);});
-    }
-  },50);
+  if(!_currentEmbed)return;
+  openModal(_currentEmbed,
+    document.getElementById('sc-stat-title').textContent,
+    document.getElementById('sc-stat-artist').textContent,
+    document.getElementById('sc-stat-cat').textContent.toLowerCase()
+  );
 }
 
 function playFocused(shelfId,cat){
@@ -653,20 +647,14 @@ function playFocused(shelfId,cat){
   var t=shelf.querySelectorAll('.tile')[idx];
   if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
 }
+
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
   document.getElementById('modal-iframe').src='';
   _currentEmbed='';
 }
-function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
-/* Recalculate offset on resize (e.g. landscape flip) */
-window.addEventListener('resize',function(){
-  var modal=document.getElementById('modal');
-  if(modal&&modal.classList.contains('open')&&_currentEmbed.includes('drive.google.com')){
-    applyDriveOffset();
-  }
-});
+function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
 /* ── INIT ── */
 ['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id){

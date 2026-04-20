@@ -22,29 +22,12 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 /* ─── NAV ─── */
-#topbar{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:var(--nav-h);
-  background:rgba(20,0,0,0.85);backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(180,0,0,0.25);
-}
+#topbar{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:var(--nav-h);background:rgba(20,0,0,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(180,0,0,0.25);}
 .tb-left{display:flex;align-items:center;gap:20px;}
 .ps-sym{width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:9px;line-height:1.2;color:rgba(255,255,255,0.4);font-weight:600;text-align:center;}
 .tb-nav{display:flex;gap:2px;}
-.tb-nav-item{
-  padding:8px 18px;
-  font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.14em;
-  color:rgba(255,255,255,0.4);cursor:pointer;border:none;background:none;
-  text-transform:uppercase;border-radius:3px;
-  transition:color 0.2s,background 0.2s;
-  position:relative;
-}
-.tb-nav-item::after{
-  content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
-  width:0;height:2px;background:linear-gradient(90deg,transparent,rgba(220,60,60,0.9),transparent);
-  transition:width 0.25s;
-}
+.tb-nav-item{padding:8px 18px;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.14em;color:rgba(255,255,255,0.4);cursor:pointer;border:none;background:none;text-transform:uppercase;border-radius:3px;transition:color 0.2s,background 0.2s;position:relative;}
+.tb-nav-item::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,transparent,rgba(220,60,60,0.9),transparent);transition:width 0.25s;}
 .tb-nav-item:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.04);}
 .tb-nav-item.active{color:#fff;}
 .tb-nav-item.active::after{width:70%;}
@@ -53,43 +36,15 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .tb-tag{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.06em;}
 .tb-clock{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.55);}
 
-/* ─── SECTION PAGES ─── */
-.page-section{
-  min-height:100vh;
-  position:relative;z-index:1;
-  display:flex;flex-direction:column;
-  padding-top:var(--nav-h);
-}
-
-/* ─── SECTION HEADER BAR ─── */
-.section-header{
-  display:flex;align-items:center;gap:20px;
-  padding:28px 60px 20px;
-  border-bottom:1px solid rgba(180,0,0,0.2);
-  background:rgba(0,0,0,0.25);
-}
-.section-label{
-  font-size:0.65rem;letter-spacing:0.35em;color:rgba(255,255,255,0.3);
-  text-transform:uppercase;
-}
-.section-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(1.4rem,3.5vw,2.2rem);
-  font-weight:700;letter-spacing:0.1em;color:#fff;
-  text-shadow:0 0 30px rgba(200,0,0,0.5);
-}
-.section-num{
-  font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;
-  color:rgba(180,0,0,0.12);letter-spacing:0.1em;margin-left:auto;
-  line-height:1;user-select:none;
-}
+/* ─── SECTIONS ─── */
+.page-section{min-height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;padding-top:var(--nav-h);}
+.section-header{display:flex;align-items:center;gap:20px;padding:28px 60px 20px;border-bottom:1px solid rgba(180,0,0,0.2);background:rgba(0,0,0,0.25);}
+.section-label{font-size:0.65rem;letter-spacing:0.35em;color:rgba(255,255,255,0.3);text-transform:uppercase;}
+.section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:700;letter-spacing:0.1em;color:#fff;text-shadow:0 0 30px rgba(200,0,0,0.5);}
+.section-num{font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;color:rgba(180,0,0,0.12);letter-spacing:0.1em;margin-left:auto;line-height:1;user-select:none;}
 
 /* ─── HERO ─── */
-#hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding:80px 60px 60px;position:relative;overflow:hidden;
-  z-index:1;
-}
+#hero{min-height:100vh;display:flex;align-items:center;padding:80px 60px 60px;position:relative;overflow:hidden;z-index:1;}
 .hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,0,0,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(200,0,0,0.06) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;}
 .hero-bg-grid::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(120,0,0,0.35) 0%,transparent 70%);}
 .hero-content{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;max-width:1300px;margin:0 auto;width:100%;}
@@ -118,91 +73,26 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .corner-mark{position:absolute;width:16px;height:16px;border-color:rgba(200,0,0,0.7);border-style:solid;}
 .corner-mark.tl{top:-2px;left:-2px;border-width:2px 0 0 2px;}.corner-mark.tr{top:-2px;right:-2px;border-width:2px 2px 0 0;}
 .corner-mark.bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px;}.corner-mark.br{bottom:-2px;right:-2px;border-width:0 2px 2px 0;}
-
-/* ─── SCROLL NEXT ARROW ─── */
-.scroll-next{
-  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  color:rgba(255,255,255,0.25);font-family:'Orbitron',sans-serif;font-size:8px;
-  letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;
-  background:none;border:none;
-  animation:bounce 2.5s ease-in-out infinite;z-index:10;
-}
+.scroll-next{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,0.25);font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;background:none;border:none;animation:bounce 2.5s ease-in-out infinite;z-index:10;}
 .scroll-next .sn-line{width:1px;height:32px;background:linear-gradient(to bottom,rgba(200,0,0,0.6),transparent);}
-.scroll-next:hover{color:rgba(255,80,80,0.7);}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
 
-/* ─── SECTION DIVIDERS ─── */
-.section-divider{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,0,0,0.5),transparent);
-}
-
-/* ─── PORTFOLIO SECTIONS ─── */
-.portfolio-section{
-  flex:1;display:flex;flex-direction:column;
-  padding-bottom:80px;
-}
-
-/* ─── CAT TABS (Music sub-categories) ─── */
+/* ─── PORTFOLIO ─── */
+.portfolio-section{flex:1;display:flex;flex-direction:column;padding-bottom:80px;}
 .cat-tabs-wrap{padding:16px 60px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .cat-tabs-wrap::-webkit-scrollbar{display:none;}
 .cat-tabs{display:flex;gap:2px;min-width:max-content;}
-.cat-tab{
-  padding:8px 20px;font-size:10px;letter-spacing:0.1em;
-  color:rgba(255,255,255,0.35);cursor:pointer;
-  border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);
-  border-radius:3px;font-family:'Rajdhani',sans-serif;font-weight:600;
-  text-transform:uppercase;transition:all 0.2s;white-space:nowrap;
-}
+.cat-tab{padding:8px 20px;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.35);cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);border-radius:3px;font-family:'Rajdhani',sans-serif;font-weight:600;text-transform:uppercase;transition:all 0.2s;white-space:nowrap;}
 .cat-tab:hover{color:rgba(255,255,255,0.75);border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);}
 .cat-tab.active{background:rgba(160,0,0,0.2);border-color:rgba(200,0,0,0.5);color:#fff;}
 .cat-section{display:none;}.cat-section.active{display:block;}
-
-/* ─── SHELF — native scroll-snap ─── */
-.shelf-outer{
-  position:relative;padding:20px 60px 40px;
-  overflow-x:auto;overflow-y:visible;
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;
-  scrollbar-width:none;
-  margin-bottom:-20px;
-}
+.shelf-outer{position:relative;padding:20px 60px 40px;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;margin-bottom:-20px;}
 .shelf-outer::-webkit-scrollbar{display:none;}
 .shelf{display:flex;gap:16px;width:max-content;}
-.tile{scroll-snap-align:center;}
-
-/* ─── TILE ─── */
-.tile{flex-shrink:0;width:var(--tile-w);cursor:pointer;transition:all 0.3s cubic-bezier(0.25,0.8,0.25,1);}
-.tile-inner{
-  width:var(--tile-w);height:var(--tile-h);
-  border-radius:4px;overflow:hidden;
-  border:2px solid rgba(255,255,255,0.07);
-  background:#000918;position:relative;transition:all 0.3s;
-}
-
-/* ── FIXED: Google Drive iframe scaling ── */
-/* Iframes render at a fixed internal size; we scale them down to fit the tile */
-.tile-inner iframe{
-  position:absolute;
-  top:0;left:0;
-  /* Render at a known base size then scale to fit */
-  width:560px;
-  height:315px;
-  border:none;
-  pointer-events:none;
-  transform-origin:top left;
-  /* Default scale — overridden per-tile by JS */
-  transform:scale(0.536);
-}
-
-/* Dark overlay covers the iframe thumbnail — lifted on focus */
-.tile-cover{
-  position:absolute;inset:0;z-index:3;
-  background:rgba(0,0,0,0.55);
-  transition:opacity 0.3s;pointer-events:none;
-}
+.tile{scroll-snap-align:center;flex-shrink:0;width:var(--tile-w);cursor:pointer;transition:all 0.3s cubic-bezier(0.25,0.8,0.25,1);}
+.tile-inner{width:var(--tile-w);height:var(--tile-h);border-radius:4px;overflow:hidden;border:2px solid rgba(255,255,255,0.07);background:#000918;position:relative;transition:all 0.3s;}
+.tile-inner iframe{position:absolute;top:0;left:0;width:560px;height:315px;border:none;pointer-events:none;transform-origin:top left;}
+.tile-cover{position:absolute;inset:0;z-index:3;background:rgba(0,0,0,0.55);transition:opacity 0.3s;pointer-events:none;}
 .tile.focused .tile-cover{opacity:0;}
 .tile-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#1a0000 0%,#3a0000 100%);}
 .tile-placeholder .play-ring{width:38px;height:38px;border:1.5px solid rgba(100,180,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;}
@@ -218,8 +108,6 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .tile.focused .tile-inner{border-color:rgba(255,80,80,0.9);box-shadow:0 0 0 1px rgba(220,0,0,0.5),0 0 30px rgba(200,0,0,0.7),0 16px 48px rgba(0,0,0,0.8);}
 .tile.focused .tile-inner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(220,0,0,0.15) 0%,transparent 50%);pointer-events:none;z-index:2;}
 .tile.focused .tile-label h3{color:#fff;}
-
-/* ─── DETAIL PANEL ─── */
 .detail-panel{padding:0 60px;display:flex;align-items:center;gap:20px;min-height:56px;flex-wrap:wrap;}
 .detail-name{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.12em;color:#fff;text-shadow:0 0 20px rgba(220,0,0,0.9);}
 .detail-sub{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.08em;margin-top:2px;}
@@ -227,30 +115,13 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .dbt{padding:7px 18px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.75);font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.14em;cursor:pointer;border-radius:3px;display:flex;align-items:center;gap:7px;transition:all 0.2s;white-space:nowrap;}
 .dbt:hover,.dbt.primary{background:rgba(180,0,0,0.2);border-color:rgba(200,0,0,0.6);color:#fff;}
 .dbt .dbt-ico{width:16px;height:16px;border-radius:50%;background:rgba(80,160,255,0.3);display:flex;align-items:center;justify-content:center;font-size:7px;}
-
-/* ─── NEXT SECTION BUTTON ─── */
-.next-section-bar{
-  margin-top:auto;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px 60px;
-  border-top:1px solid rgba(180,0,0,0.15);
-  gap:20px;
-}
-.next-section-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:10px 28px;
-  background:transparent;border:1px solid rgba(180,0,0,0.4);
-  color:rgba(255,255,255,0.6);font-family:'Orbitron',sans-serif;
-  font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
-  cursor:pointer;border-radius:3px;transition:all 0.3s;
-}
+.next-section-bar{margin-top:auto;display:flex;align-items:center;justify-content:center;padding:20px 60px;border-top:1px solid rgba(180,0,0,0.15);gap:20px;}
+.next-section-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 28px;background:transparent;border:1px solid rgba(180,0,0,0.4);color:rgba(255,255,255,0.6);font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.3s;}
 .next-section-btn:hover{border-color:rgba(255,80,80,0.7);color:#fff;background:rgba(180,0,0,0.1);}
 .next-section-btn.primary{border-color:rgba(200,0,0,0.6);color:#fff;background:rgba(180,0,0,0.1);}
-.next-section-btn.primary:hover{background:rgba(200,0,0,0.2);}
 .section-progress{display:flex;gap:8px;align-items:center;}
 .sp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;}
 .sp-dot.active{background:rgba(220,60,60,0.9);width:20px;border-radius:3px;}
-.sp-dot:hover{background:rgba(255,80,80,0.5);}
 
 /* ─── BOTTOM BAR ─── */
 #bottombar{position:fixed;bottom:0;left:0;right:0;z-index:500;padding:8px 28px;background:rgba(15,0,0,0.75);backdrop-filter:blur(12px);border-top:1px solid rgba(180,0,0,0.15);display:flex;align-items:center;justify-content:flex-end;gap:20px;}
@@ -259,37 +130,12 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .psbtn.x{background:#cc2222;}.psbtn.o{background:#991111;}.psbtn.sq{background:#7a1a1a;}.psbtn.tri{background:#550000;}
 
 /* ─── MODAL ─── */
-#modal{
-  position:fixed;inset:0;z-index:2000;
-  background:rgba(8,0,0,0.97);
-  display:none;align-items:center;justify-content:center;
-  font-family:'Rajdhani',sans-serif;
-  padding:16px;overflow-y:auto;
-}
+#modal{position:fixed;inset:0;z-index:2000;background:rgba(8,0,0,0.97);display:none;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;padding:16px;overflow-y:auto;}
 #modal.open{display:flex;}
-.sc-overlay{
-  width:min(95vw,1100px);
-  background:linear-gradient(135deg,#1a0000 0%,#0d0000 100%);
-  border:2px solid rgba(200,0,0,0.6);border-radius:4px;
-  overflow:hidden;
-  position:relative;
-  animation:scIn 0.25s cubic-bezier(0.25,0.8,0.25,1);
-  margin:auto;
-}
+.sc-overlay{width:min(95vw,1100px);background:linear-gradient(135deg,#1a0000 0%,#0d0000 100%);border:2px solid rgba(200,0,0,0.6);border-radius:4px;overflow:hidden;position:relative;animation:scIn 0.25s cubic-bezier(0.25,0.8,0.25,1);margin:auto;}
 @keyframes scIn{from{transform:scale(0.92);opacity:0;}to{transform:scale(1);opacity:1;}}
-
-/* Always-visible close button */
-.modal-close-btn{
-  position:absolute;top:10px;right:10px;z-index:100;
-  width:44px;height:44px;border-radius:50%;
-  background:rgba(140,0,0,0.95);border:2px solid rgba(255,80,80,0.8);
-  color:#fff;font-size:18px;line-height:44px;text-align:center;
-  cursor:pointer;-webkit-tap-highlight-color:transparent;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 12px rgba(0,0,0,0.6);
-}
+.modal-close-btn{position:absolute;top:10px;right:10px;z-index:100;width:44px;height:44px;border-radius:50%;background:rgba(140,0,0,0.95);border:2px solid rgba(255,80,80,0.8);color:#fff;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,0.6);}
 .modal-close-btn:hover{background:rgba(200,0,0,0.95);}
-
 .sc-header{display:flex;justify-content:space-between;align-items:center;padding:10px 60px 10px 20px;background:rgba(180,0,0,0.2);border-bottom:1px solid rgba(200,0,0,0.4);flex-wrap:wrap;gap:6px;}
 .sc-header-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.3em;color:#fff;}
 .sc-bracket{color:rgba(255,80,80,0.7);font-size:16px;margin:0 6px;}
@@ -297,7 +143,12 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-body{display:grid;grid-template-columns:1.4fr 1fr;}
 .sc-left{padding:20px;border-right:1px solid rgba(200,0,0,0.25);display:flex;flex-direction:column;gap:12px;background:rgba(0,0,0,0.3);}
 
-/* ── Modal video frame ── */
+/*
+  ── THE VIDEO FRAME ──
+  .sc-vid-frame is a strict 16:9 clipping box (overflow:hidden).
+  The iframe inside is made taller than the box and shifted up
+  by JS to hide Drive's toolbar. For YouTube, top=0 / height=100%.
+*/
 .sc-vid-frame{
   position:relative;
   width:100%;
@@ -308,36 +159,15 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   border-radius:3px;
   overflow:hidden;
 }
-.sc-vid-frame iframe{
+#modal-iframe{
   position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  border:none;display:block;
-  transform:none !important;
-}
-.sc-vid-frame video{
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  object-fit:contain;
-  background:#000;
+  left:0;
+  width:100%;
+  border:none;
   display:block;
-}
-.sc-drive-fallback{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;background:linear-gradient(135deg,#1a0000,#0d0000);
-}
-.sc-drive-fallback a{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:14px 28px;
-  background:rgba(180,0,0,0.4);border:1px solid rgba(220,0,0,0.8);
-  color:#fff;font-family:'Orbitron',sans-serif;font-size:11px;
-  letter-spacing:0.18em;text-transform:uppercase;border-radius:3px;
-  text-decoration:none;
-}
-.sc-drive-fallback p{
-  font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;
+  /* top and height set dynamically by JS */
+  top:0;
+  height:100%;
 }
 
 .sc-vid-corners{position:absolute;inset:0;z-index:3;pointer-events:none;}
@@ -391,15 +221,12 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   .section-header,.shelf-outer,.detail-panel,.cat-tabs-wrap,.next-section-bar{padding-left:16px;padding-right:16px;}
   .detail-btns{margin-left:0;width:100%;}
   .dbt{flex:1;justify-content:center;}
-
-  /* Modal: single column on mobile */
   #modal{padding:0;align-items:flex-start;}
   .sc-overlay{width:100%;border-radius:0;border-left:none;border-right:none;min-height:100vh;margin:0;}
   .sc-body{grid-template-columns:1fr;}
   .sc-left{border-right:none;border-bottom:1px solid rgba(200,0,0,0.25);padding:12px;}
   .sc-right{padding:14px 16px;}
   .sc-nameplate{display:none;}
-
   #bottombar .bbt:nth-child(3),#bottombar .bbt:nth-child(4){display:none;}
   #bottombar{padding:8px 16px;gap:12px;}
   .next-section-btn span{display:none;}
@@ -415,7 +242,6 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
 </div>
 
-<!-- NAV -->
 <nav id="topbar">
   <div class="tb-left">
     <div class="ps-sym">△○<br>×□</div>
@@ -434,9 +260,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════
-     SECTION 0 — HERO
-═══════════════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="hero" class="page-section">
   <div class="hero-bg-grid"></div>
   <div class="hero-content">
@@ -473,20 +297,13 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </button>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     SECTION 1 — MUSIC VIDEOS
-═══════════════════════════════════════════════════ -->
+<!-- SECTION 1 — MUSIC VIDEOS -->
 <section id="section-music" class="page-section">
   <div class="section-header">
-    <div>
-      <div class="section-label">Selected Work · 01</div>
-      <div class="section-title">Music Videos</div>
-    </div>
+    <div><div class="section-label">Selected Work · 01</div><div class="section-title">Music Videos</div></div>
     <div class="section-num">01</div>
   </div>
-
   <div class="portfolio-section">
-    <!-- Sub-category tabs -->
     <div class="cat-tabs-wrap">
       <div class="cat-tabs">
         <button class="cat-tab active" onclick="switchCat('trippy',this)">🌀 Trippy / Underground</button>
@@ -494,7 +311,6 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <button class="cat-tab" onclick="switchCat('slowcin',this)">🎬 Slow Cinematic</button>
       </div>
     </div>
-
     <!-- Trippy -->
     <div class="cat-section active" id="cat-trippy">
       <div class="shelf-outer"><div class="shelf" id="shelf-trippy">
@@ -505,12 +321,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
-      <div class="detail-panel" id="dp-trippy">
-        <div class="detail-info"><div class="detail-name" id="dn-trippy">Video Title</div><div class="detail-sub" id="ds-trippy">Artist / Info</div></div>
-        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-trippy','trippy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
-      </div>
+      <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-trippy">Video Title</div><div class="detail-sub" id="ds-trippy">Artist / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-trippy','trippy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
     </div>
-
     <!-- Energy -->
     <div class="cat-section" id="cat-energy">
       <div class="shelf-outer"><div class="shelf" id="shelf-energy">
@@ -521,12 +333,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
-      <div class="detail-panel" id="dp-energy">
-        <div class="detail-info"><div class="detail-name" id="dn-energy">Video Title</div><div class="detail-sub" id="ds-energy">Artist / Info</div></div>
-        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-energy','energy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
-      </div>
+      <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-energy">Video Title</div><div class="detail-sub" id="ds-energy">Artist / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-energy','energy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
     </div>
-
     <!-- Slow Cinematic -->
     <div class="cat-section" id="cat-slowcin">
       <div class="shelf-outer"><div class="shelf" id="shelf-slowcin">
@@ -537,13 +345,9 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
-      <div class="detail-panel" id="dp-slowcin">
-        <div class="detail-info"><div class="detail-name" id="dn-slowcin">Video Title</div><div class="detail-sub" id="ds-slowcin">Artist / Info</div></div>
-        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-slowcin','slowcin')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
-      </div>
+      <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-slowcin">Video Title</div><div class="detail-sub" id="ds-slowcin">Artist / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-slowcin','slowcin')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
     </div>
   </div>
-
   <div class="next-section-bar">
     <div class="section-progress">
       <div class="sp-dot" onclick="scrollToSection('hero')"></div>
@@ -551,25 +355,16 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="sp-dot" onclick="scrollToSection('section-cinematic')"></div>
       <div class="sp-dot" onclick="scrollToSection('section-experimental')"></div>
     </div>
-    <button class="next-section-btn primary" onclick="scrollToSection('section-cinematic')">
-      <span>Cinematic Projects</span>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
+    <button class="next-section-btn primary" onclick="scrollToSection('section-cinematic')"><span>Cinematic Projects</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     SECTION 2 — CINEMATIC
-═══════════════════════════════════════════════════ -->
+<!-- SECTION 2 — CINEMATIC -->
 <section id="section-cinematic" class="page-section">
   <div class="section-header">
-    <div>
-      <div class="section-label">Selected Work · 02</div>
-      <div class="section-title">Cinematic Projects</div>
-    </div>
+    <div><div class="section-label">Selected Work · 02</div><div class="section-title">Cinematic Projects</div></div>
     <div class="section-num">02</div>
   </div>
-
   <div class="portfolio-section">
     <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-cinematic">
       <div class="tile focused" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
@@ -579,12 +374,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
     </div></div>
-    <div class="detail-panel" id="dp-cinematic">
-      <div class="detail-info"><div class="detail-name" id="dn-cinematic">Project Title</div><div class="detail-sub" id="ds-cinematic">Director / Info</div></div>
-      <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-cinematic','cinematic')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
-    </div>
+    <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-cinematic">Project Title</div><div class="detail-sub" id="ds-cinematic">Director / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-cinematic','cinematic')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
   </div>
-
   <div class="next-section-bar">
     <div class="section-progress">
       <div class="sp-dot" onclick="scrollToSection('hero')"></div>
@@ -592,29 +383,17 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="sp-dot active" onclick="scrollToSection('section-cinematic')"></div>
       <div class="sp-dot" onclick="scrollToSection('section-experimental')"></div>
     </div>
-    <button class="next-section-btn" onclick="scrollToSection('section-music')">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      <span>Music Videos</span>
-    </button>
-    <button class="next-section-btn primary" onclick="scrollToSection('section-experimental')">
-      <span>Experimental</span>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
+    <button class="next-section-btn" onclick="scrollToSection('section-music')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Music Videos</span></button>
+    <button class="next-section-btn primary" onclick="scrollToSection('section-experimental')"><span>Experimental</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     SECTION 3 — EXPERIMENTAL
-═══════════════════════════════════════════════════ -->
+<!-- SECTION 3 — EXPERIMENTAL -->
 <section id="section-experimental" class="page-section">
   <div class="section-header">
-    <div>
-      <div class="section-label">Selected Work · 03</div>
-      <div class="section-title">Experimental</div>
-    </div>
+    <div><div class="section-label">Selected Work · 03</div><div class="section-title">Experimental</div></div>
     <div class="section-num">03</div>
   </div>
-
   <div class="portfolio-section">
     <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-experimental">
       <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
@@ -624,12 +403,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
     </div></div>
-    <div class="detail-panel" id="dp-experimental">
-      <div class="detail-info"><div class="detail-name" id="dn-experimental">Project Title</div><div class="detail-sub" id="ds-experimental">Description / Info</div></div>
-      <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-experimental','experimental')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
-    </div>
+    <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-experimental">Project Title</div><div class="detail-sub" id="ds-experimental">Description / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-experimental','experimental')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
   </div>
-
   <div class="next-section-bar">
     <div class="section-progress">
       <div class="sp-dot" onclick="scrollToSection('hero')"></div>
@@ -637,18 +412,11 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="sp-dot" onclick="scrollToSection('section-cinematic')"></div>
       <div class="sp-dot active" onclick="scrollToSection('section-experimental')"></div>
     </div>
-    <button class="next-section-btn" onclick="scrollToSection('section-cinematic')">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      <span>Cinematic</span>
-    </button>
-    <button class="next-section-btn primary" onclick="scrollToSection('hero')">
-      <span>Back to Top</span>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:rotate(-90deg)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
+    <button class="next-section-btn" onclick="scrollToSection('section-cinematic')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Cinematic</span></button>
+    <button class="next-section-btn primary" onclick="scrollToSection('hero')"><span>Back to Top</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:rotate(-90deg)"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
   </div>
 </section>
 
-<!-- BOTTOM BAR -->
 <div id="bottombar">
   <div class="bbt"><span class="psbtn x">X</span>PLAY</div>
   <div class="bbt"><span class="psbtn o">O</span>CLOSE</div>
@@ -658,7 +426,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 
 <!-- MODAL -->
 <div id="modal" onclick="closeModalOutside(event)">
-  <div class="sc-overlay" style="position:relative;">
+  <div class="sc-overlay">
     <button class="modal-close-btn" onclick="closeModal()" aria-label="Close">&#x2715;</button>
     <div class="sc-header">
       <div><span class="sc-bracket">[</span><span class="sc-header-title">SELECT VIDEO</span><span class="sc-bracket">]</span></div>
@@ -668,12 +436,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="sc-left">
         <div class="sc-vid-frame" id="sc-vid-frame">
           <div class="sc-vid-corners"><span class="sc-c tl"></span><span class="sc-c tr"></span><span class="sc-c bl"></span><span class="sc-c br"></span></div>
-          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen" style="display:none;"></iframe>
-          <video id="modal-video" controls playsinline style="display:none;"></video>
-          <div class="sc-drive-fallback" id="modal-drive-fallback" style="display:none;">
-            <a id="modal-drive-link" href="#" target="_blank">▶ &nbsp;OPEN VIDEO</a>
-            <p>Tap to watch in Google Drive</p>
-          </div>
+          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
         </div>
         <div class="sc-nameplate"><div class="sc-nameplate-inner"><div class="sc-nameplate-icon">▶</div><div id="modal-title" class="sc-nameplate-title">VIDEO TITLE</div></div></div>
       </div>
@@ -689,7 +452,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="sc-desc" id="sc-desc">A cinematic visual work directed and shot by RAGO.</div>
         <div class="sc-divider"></div>
         <div class="sc-actions">
-          <button class="sc-btn primary" onclick="(function(){var v=document.getElementById('modal-video');if(v&&v.src)v.play();else{var f=document.getElementById('modal-iframe');f.src=f.src;}})()">▶ PLAY</button>
+          <button class="sc-btn primary" onclick="replayModal()">▶ PLAY</button>
           <button class="sc-btn" onclick="closeModal()">✕ CLOSE</button>
         </div>
         <div class="sc-hint">2P/ Press START button to begin.</div>
@@ -713,114 +476,61 @@ tick();setInterval(tick,15000);
   (function frame(){ctx.clearRect(0,0,W,H);pts.forEach(function(p){ctx.beginPath();ctx.arc(p.x%W,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(255,80,80,'+p.a+')';ctx.fill();p.y-=p.vy;p.vx=Math.sin(p.y*0.015)*0.25;p.x+=p.vx;if(p.y<-4){p.y=H+4;p.x=Math.random()*W;}});requestAnimationFrame(frame);})();
 })();
 
-/* ── SCROLL TO SECTION ── */
-function scrollToSection(id){
-  var el=document.getElementById(id);
-  if(el)el.scrollIntoView({behavior:'smooth'});
-}
+/* ── SCROLL ── */
+function scrollToSection(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
 
-/* ── NAV ACTIVE STATE via IntersectionObserver ── */
+/* ── NAV ACTIVE ── */
 var navMap={'hero':'nav-home','section-music':'nav-music','section-cinematic':'nav-cinematic','section-experimental':'nav-experimental'};
-var observer=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if(e.isIntersecting&&e.intersectionRatio>0.4){
-      document.querySelectorAll('.tb-nav-item').forEach(function(b){b.classList.remove('active');});
-      var btn=document.getElementById(navMap[e.target.id]);
-      if(btn)btn.classList.add('active');
-    }
-  });
-},{threshold:0.4});
-['hero','section-music','section-cinematic','section-experimental'].forEach(function(id){
-  var el=document.getElementById(id);if(el)observer.observe(el);
-});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>0.4){document.querySelectorAll('.tb-nav-item').forEach(function(b){b.classList.remove('active');});var btn=document.getElementById(navMap[e.target.id]);if(btn)btn.classList.add('active');}});},{threshold:0.4});
+['hero','section-music','section-cinematic','section-experimental'].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el);});
 
-/* ── SCALE TILE IFRAMES TO FIT ──
-   Google Drive iframes render at their own internal resolution (~560×315).
-   We give them those fixed dimensions then use transform:scale() to shrink
-   them down to fit the tile exactly — no cropping, no zoom. */
+/* ── SCALE TILE IFRAMES ── */
 function scaleTileIframes(){
   document.querySelectorAll('.tile-inner').forEach(function(inner){
-    var iframe=inner.querySelector('iframe');
-    if(!iframe)return;
-    /* Base render dimensions we set in CSS */
-    var baseW=560,baseH=315;
-    var scaleX=inner.offsetWidth/baseW;
-    var scaleY=inner.offsetHeight/baseH;
-    var scale=Math.min(scaleX,scaleY);
-    /* Center horizontally and vertically within tile */
-    var scaledW=baseW*scale;
-    var scaledH=baseH*scale;
-    var offsetX=(inner.offsetWidth-scaledW)/2;
-    var offsetY=(inner.offsetHeight-scaledH)/2;
-    iframe.style.transform='translate('+offsetX+'px,'+offsetY+'px) scale('+scale+')';
+    var iframe=inner.querySelector('iframe');if(!iframe)return;
+    var bW=560,bH=315;
+    var sx=inner.offsetWidth/bW,sy=inner.offsetHeight/bH,s=Math.min(sx,sy);
+    var ox=(inner.offsetWidth-bW*s)/2,oy=(inner.offsetHeight-bH*s)/2;
+    iframe.style.transform='translate('+ox+'px,'+oy+'px) scale('+s+')';
     iframe.style.transformOrigin='top left';
   });
 }
-/* Run on load and resize */
 scaleTileIframes();
 window.addEventListener('resize',scaleTileIframes);
-/* Also run after fonts/layout settle */
 window.addEventListener('load',scaleTileIframes);
 
 /* ── TILE FOCUS ── */
 var focusState={};
-
-function focusTile(shelfId,idx,catId){
+function focusTile(shelfId,idx,cat){
   var shelf=document.getElementById(shelfId);if(!shelf)return;
   var tiles=shelf.querySelectorAll('.tile');
   tiles.forEach(function(t,i){t.classList.toggle('focused',i===idx);});
   focusState[shelfId]=idx;
   var t=tiles[idx];if(!t)return;
-  var cat=catId||shelfId.replace('shelf-','');
   var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
   if(dn)dn.textContent=t.dataset.title||'Video Title';
   if(ds)ds.textContent=t.dataset.sub||'';
-  /* Scroll tile into view within shelf-outer */
   var outer=shelf.parentElement;
-  var tileLeft=t.offsetLeft;
-  var tileCenter=tileLeft+t.offsetWidth/2;
-  var outerCenter=outer.clientWidth/2;
-  outer.scrollTo({left:tileCenter-outerCenter,behavior:'smooth'});
+  outer.scrollTo({left:t.offsetLeft+t.offsetWidth/2-outer.clientWidth/2,behavior:'smooth'});
 }
-
-/* ── TILE INTERACTIONS ── */
 document.querySelectorAll('.tile').forEach(function(t){
-  t.addEventListener('mouseenter',function(){
-    var s=t.closest('.shelf');if(!s)return;
-    var cat=s.id.replace('shelf-','');
-    focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),cat);
-  });
-  t.addEventListener('click',function(){
-    if(t.dataset.embed){
-      var s=t.closest('.shelf');
-      var cat=s?s.id.replace('shelf-',''):'cinematic';
-      openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
-    }
-  });
+  t.addEventListener('mouseenter',function(){var s=t.closest('.shelf');if(!s)return;focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),s.id.replace('shelf-',''));});
+  t.addEventListener('click',function(){if(t.dataset.embed){var s=t.closest('.shelf');openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,s?s.id.replace('shelf-',''):'cinematic');}});
 });
-
-/* ── SCROLL-BASED TILE FOCUS ── */
 document.querySelectorAll('.shelf-outer').forEach(function(outer){
   var shelf=outer.querySelector('.shelf');if(!shelf)return;
   var ticking=false;
   outer.addEventListener('scroll',function(){
-    if(ticking)return;
-    ticking=true;
+    if(ticking)return;ticking=true;
     requestAnimationFrame(function(){
       ticking=false;
       var tiles=shelf.querySelectorAll('.tile');if(!tiles.length)return;
-      var outerCenter=outer.scrollLeft+outer.clientWidth/2;
-      var closest=0,minDist=Infinity;
-      tiles.forEach(function(t,i){
-        var tCenter=t.offsetLeft+t.offsetWidth/2;
-        var dist=Math.abs(tCenter-outerCenter);
-        if(dist<minDist){minDist=dist;closest=i;}
-      });
+      var oc=outer.scrollLeft+outer.clientWidth/2,closest=0,minD=Infinity;
+      tiles.forEach(function(t,i){var d=Math.abs(t.offsetLeft+t.offsetWidth/2-oc);if(d<minD){minD=d;closest=i;}});
       var cat=shelf.id.replace('shelf-','');
       tiles.forEach(function(t,i){t.classList.toggle('focused',i===closest);});
       focusState[shelf.id]=closest;
-      var ft=tiles[closest];
-      var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
+      var ft=tiles[closest],dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
       if(dn&&ft)dn.textContent=ft.dataset.title||'Video Title';
       if(ds&&ft)ds.textContent=ft.dataset.sub||'';
     });
@@ -833,14 +543,10 @@ document.addEventListener('keydown',function(e){
   var modal=document.getElementById('modal');
   if(modal&&modal.classList.contains('open')){if(e.key==='Escape')closeModal();return;}
   var shelf=document.getElementById(activeShelfId);if(!shelf)return;
-  var tiles=shelf.querySelectorAll('.tile'),idx=focusState[activeShelfId]||0;
-  var cat=activeShelfId.replace('shelf-','');
+  var tiles=shelf.querySelectorAll('.tile'),idx=focusState[activeShelfId]||0,cat=activeShelfId.replace('shelf-','');
   if(e.key==='ArrowRight'){e.preventDefault();focusTile(activeShelfId,Math.min(idx+1,tiles.length-1),cat);}
   if(e.key==='ArrowLeft'){e.preventDefault();focusTile(activeShelfId,Math.max(idx-1,0),cat);}
-  if(e.key==='Enter'||e.key===' '){
-    var t=tiles[focusState[activeShelfId]||0];
-    if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
-  }
+  if(e.key==='Enter'||e.key===' '){var t=tiles[idx];if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);}
 });
 
 /* ── CAT TABS ── */
@@ -850,14 +556,45 @@ function switchCat(cat,el){
   var sec=document.getElementById('cat-'+cat);if(sec)sec.classList.add('active');
   if(el)el.classList.add('active');
   activeShelfId='shelf-'+cat;
-  var shelfOuter=document.getElementById('shelf-'+cat);
-  if(shelfOuter&&shelfOuter.parentElement)shelfOuter.parentElement.scrollLeft=0;
+  var so=document.getElementById('shelf-'+cat);if(so&&so.parentElement)so.parentElement.scrollLeft=0;
   focusTile(activeShelfId,0,cat);
-  /* Re-run scaling in case tiles just became visible */
   setTimeout(scaleTileIframes,50);
 }
 
-/* ── MODAL ── */
+/* ────────────────────────────────────────────────
+   MODAL — Drive toolbar clipping
+   
+   Google Drive's /preview iframe renders a toolbar
+   at the top. Its height in CSS pixels depends on
+   the rendered width of the frame (Drive is responsive).
+   
+   We measure the frame AFTER the modal renders, then:
+   • shift the iframe UP by toolbar height (hides toolbar above clip edge)
+   • extend iframe HEIGHT by same amount (so bottom isn't cut)
+   • parent has overflow:hidden so toolbar is invisible
+   
+   YouTube: no toolbar, so top=0 height=100% always.
+──────────────────────────────────────────────── */
+var _currentEmbed = '';
+
+function driveToolbarPx(frameWidth){
+  /* Empirically measured Drive toolbar heights at various iframe widths.
+     These values account for iOS Safari's viewport scaling. */
+  if(frameWidth < 420) return 46;   /* narrow mobile          */
+  if(frameWidth < 640) return 50;   /* standard mobile/tablet */
+  if(frameWidth < 960) return 56;   /* large tablet / desktop modal */
+  return 60;                         /* wide desktop           */
+}
+
+function applyDriveOffset(){
+  var frame  = document.getElementById('sc-vid-frame');
+  var iframe = document.getElementById('modal-iframe');
+  if(!frame||!iframe)return;
+  var t = driveToolbarPx(frame.offsetWidth);
+  iframe.style.top    = '-'+t+'px';
+  iframe.style.height = 'calc(100% + '+t+'px)';
+}
+
 var scDescs={
   trippy:"An underground visual journey — hypnotic textures and psychedelic movement captured through RAGO's lens.",
   energy:"High-octane direction. Raw energy translated into kinetic visuals that hit as hard as the track.",
@@ -867,51 +604,50 @@ var scDescs={
 };
 
 function openModal(embed,title,sub,cat){
-  var modalIframe=document.getElementById('modal-iframe');
-  var modalVideo=document.getElementById('modal-video');
-  var modalFallback=document.getElementById('modal-drive-fallback');
-  var modalDriveLink=document.getElementById('modal-drive-link');
+  var iframe = document.getElementById('modal-iframe');
+  _currentEmbed = embed;
 
-  /* Hide all video elements first */
-  modalIframe.style.display='none';
-  modalVideo.style.display='none';
-  modalFallback.style.display='none';
-  modalIframe.src='';
-  modalVideo.src='';
+  var isDrive = embed.includes('drive.google.com');
 
-  if(embed.includes('drive.google.com')){
-    /* Extract file ID from Drive URL and build a direct stream URL */
-    var fileId=embed.match(/\/d\/([^\/\?]+)/);
-    if(fileId&&fileId[1]){
-      var directUrl='https://drive.google.com/uc?export=download&id='+fileId[1];
-      var previewUrl='https://drive.google.com/file/d/'+fileId[1]+'/preview';
-      /* Try native video tag first — cleanest result */
-      modalVideo.src=directUrl;
-      modalVideo.style.display='block';
-      /* If video fails to load (CORS/auth), fall back to open-in-drive button */
-      modalVideo.onerror=function(){
-        modalVideo.style.display='none';
-        modalDriveLink.href=previewUrl;
-        modalFallback.style.display='flex';
-      };
-    }
+  /* Reset to safe defaults before loading new src */
+  iframe.style.top    = '0';
+  iframe.style.height = '100%';
+  iframe.src = '';
+
+  if(isDrive){
+    iframe.src = embed; /* already a /preview URL */
+    /* Let the modal paint, then apply pixel-perfect offset */
+    requestAnimationFrame(function(){
+      requestAnimationFrame(applyDriveOffset);
+    });
   } else {
-    /* YouTube and everything else — standard iframe */
-    var finalSrc=embed;
+    var src = embed;
     if(embed.includes('youtube.com')||embed.includes('youtu.be')){
-      finalSrc=embed+(embed.includes('?')?'&':'?')+'autoplay=1&rel=0';
+      src = embed + (embed.includes('?')?'&':'?') + 'autoplay=1&rel=0';
     }
-    modalIframe.src=finalSrc;
-    modalIframe.style.display='block';
+    iframe.src = src;
   }
 
-  document.getElementById('modal-title').textContent=(title||'Video Title').toUpperCase();
-  document.getElementById('sc-stat-title').textContent=title||'—';
-  document.getElementById('sc-stat-artist').textContent=sub||'—';
-  document.getElementById('sc-stat-cat').textContent=(cat||'cinematic').toUpperCase();
-  var desc=document.getElementById('sc-desc');if(desc)desc.textContent=scDescs[cat]||scDescs.cinematic;
+  document.getElementById('modal-title').textContent   = (title||'Video Title').toUpperCase();
+  document.getElementById('sc-stat-title').textContent  = title||'—';
+  document.getElementById('sc-stat-artist').textContent = sub||'—';
+  document.getElementById('sc-stat-cat').textContent    = (cat||'cinematic').toUpperCase();
+  var desc=document.getElementById('sc-desc');
+  if(desc)desc.textContent=scDescs[cat]||scDescs.cinematic;
   document.getElementById('modal').classList.add('open');
 }
+
+function replayModal(){
+  var iframe=document.getElementById('modal-iframe'),s=iframe.src;
+  iframe.src='';
+  setTimeout(function(){
+    iframe.src=s;
+    if(_currentEmbed.includes('drive.google.com')){
+      requestAnimationFrame(function(){requestAnimationFrame(applyDriveOffset);});
+    }
+  },50);
+}
+
 function playFocused(shelfId,cat){
   var idx=focusState[shelfId]||0,shelf=document.getElementById(shelfId);if(!shelf)return;
   var t=shelf.querySelectorAll('.tile')[idx];
@@ -919,18 +655,22 @@ function playFocused(shelfId,cat){
 }
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
-  var modalIframe=document.getElementById('modal-iframe');
-  var modalVideo=document.getElementById('modal-video');
-  modalIframe.src='';
-  modalVideo.pause();
-  modalVideo.src='';
+  document.getElementById('modal-iframe').src='';
+  _currentEmbed='';
 }
 function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
+/* Recalculate offset on resize (e.g. landscape flip) */
+window.addEventListener('resize',function(){
+  var modal=document.getElementById('modal');
+  if(modal&&modal.classList.contains('open')&&_currentEmbed.includes('drive.google.com')){
+    applyDriveOffset();
+  }
+});
+
 /* ── INIT ── */
 ['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id){
-  var cat=id.replace('shelf-','');
-  focusTile(id,0,cat);
+  focusTile(id,0,id.replace('shelf-',''));
 });
 activeShelfId='shelf-trippy';
 </script>

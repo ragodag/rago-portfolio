@@ -181,14 +181,22 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   border:2px solid rgba(255,255,255,0.07);
   background:#000918;position:relative;transition:all 0.3s;
 }
-/* Tile iframes: scale down to fit the tile and prevent overflow */
+
+/* ── FIXED: Google Drive iframe scaling ── */
+/* Iframes render at a fixed internal size; we scale them down to fit the tile */
 .tile-inner iframe{
-  position:absolute;top:0;left:0;
-  width:100%;height:100%;
-  border:none;pointer-events:none;
-  /* Scale trick: make iframe render at its natural size then shrink to fit */
+  position:absolute;
+  top:0;left:0;
+  /* Render at a known base size then scale to fit */
+  width:560px;
+  height:315px;
+  border:none;
+  pointer-events:none;
   transform-origin:top left;
+  /* Default scale — overridden per-tile by JS */
+  transform:scale(0.536);
 }
+
 /* Dark overlay covers the iframe thumbnail — lifted on focus */
 .tile-cover{
   position:absolute;inset:0;z-index:3;
@@ -270,7 +278,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 }
 @keyframes scIn{from{transform:scale(0.92);opacity:0;}to{transform:scale(1);opacity:1;}}
 
-/* Always-visible close button — top right of overlay */
+/* Always-visible close button */
 .modal-close-btn{
   position:absolute;top:10px;right:10px;z-index:100;
   width:44px;height:44px;border-radius:50%;
@@ -289,11 +297,11 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-body{display:grid;grid-template-columns:1.4fr 1fr;}
 .sc-left{padding:20px;border-right:1px solid rgba(200,0,0,0.25);display:flex;flex-direction:column;gap:12px;background:rgba(0,0,0,0.3);}
 
-/* Video frame — reliable 16:9 using padding-bottom trick */
+/* ── FIXED: Modal video — reliable 16:9 that never clips ── */
 .sc-vid-frame{
   position:relative;
   width:100%;
-  padding-bottom:56.25%; /* 16:9 */
+  padding-bottom:56.25%;
   height:0;
   background:#000;
   border:1px solid rgba(200,0,0,0.3);
@@ -303,9 +311,15 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-vid-frame iframe{
   position:absolute;
   top:0;left:0;
-  width:100%;height:100%;
-  border:none;display:block;
+  width:100%;
+  height:100%;
+  border:none;
+  display:block;
+  /* Reset any tile-inner scaling — modal iframe should fill its box */
+  transform:none !important;
+  transform-origin:top left;
 }
+
 .sc-vid-corners{position:absolute;inset:0;z-index:3;pointer-events:none;}
 .sc-c{position:absolute;width:14px;height:14px;border-color:rgba(220,60,60,0.8);border-style:solid;}
 .sc-c.tl{top:0;left:0;border-width:2px 0 0 2px;}.sc-c.tr{top:0;right:0;border-width:2px 2px 0 0;}
@@ -358,13 +372,13 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   .detail-btns{margin-left:0;width:100%;}
   .dbt{flex:1;justify-content:center;}
 
-  /* Modal: single column, video on top, info below, scrollable */
+  /* Modal: single column on mobile */
   #modal{padding:0;align-items:flex-start;}
   .sc-overlay{width:100%;border-radius:0;border-left:none;border-right:none;min-height:100vh;margin:0;}
   .sc-body{grid-template-columns:1fr;}
   .sc-left{border-right:none;border-bottom:1px solid rgba(200,0,0,0.25);padding:12px;}
   .sc-right{padding:14px 16px;}
-  .sc-nameplate{display:none;} /* save space on mobile */
+  .sc-nameplate{display:none;}
 
   #bottombar .bbt:nth-child(3),#bottombar .bbt:nth-child(4){display:none;}
   #bottombar{padding:8px 16px;gap:12px;}
@@ -464,9 +478,9 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     <!-- Trippy -->
     <div class="cat-section active" id="cat-trippy">
       <div class="shelf-outer"><div class="shelf" id="shelf-trippy">
-        <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
@@ -480,9 +494,9 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     <!-- Energy -->
     <div class="cat-section" id="cat-energy">
       <div class="shelf-outer"><div class="shelf" id="shelf-energy">
-        <div class="tile focused" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
@@ -496,8 +510,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     <!-- Slow Cinematic -->
     <div class="cat-section" id="cat-slowcin">
       <div class="shelf-outer"><div class="shelf" id="shelf-slowcin">
-        <div class="tile focused" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
@@ -583,7 +597,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 
   <div class="portfolio-section">
     <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-experimental">
-      <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
@@ -634,7 +648,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="sc-left">
         <div class="sc-vid-frame">
           <div class="sc-vid-corners"><span class="sc-c tl"></span><span class="sc-c tr"></span><span class="sc-c bl"></span><span class="sc-c br"></span></div>
-          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen" style="width:100%;height:100%;border:none;display:block;"></iframe>
+          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen" style="width:100%;height:100%;border:none;display:block;transform:none;"></iframe>
         </div>
         <div class="sc-nameplate"><div class="sc-nameplate-inner"><div class="sc-nameplate-icon">▶</div><div id="modal-title" class="sc-nameplate-title">VIDEO TITLE</div></div></div>
       </div>
@@ -695,6 +709,34 @@ var observer=new IntersectionObserver(function(entries){
   var el=document.getElementById(id);if(el)observer.observe(el);
 });
 
+/* ── SCALE TILE IFRAMES TO FIT ──
+   Google Drive iframes render at their own internal resolution (~560×315).
+   We give them those fixed dimensions then use transform:scale() to shrink
+   them down to fit the tile exactly — no cropping, no zoom. */
+function scaleTileIframes(){
+  document.querySelectorAll('.tile-inner').forEach(function(inner){
+    var iframe=inner.querySelector('iframe');
+    if(!iframe)return;
+    /* Base render dimensions we set in CSS */
+    var baseW=560,baseH=315;
+    var scaleX=inner.offsetWidth/baseW;
+    var scaleY=inner.offsetHeight/baseH;
+    var scale=Math.min(scaleX,scaleY);
+    /* Center horizontally and vertically within tile */
+    var scaledW=baseW*scale;
+    var scaledH=baseH*scale;
+    var offsetX=(inner.offsetWidth-scaledW)/2;
+    var offsetY=(inner.offsetHeight-scaledH)/2;
+    iframe.style.transform='translate('+offsetX+'px,'+offsetY+'px) scale('+scale+')';
+    iframe.style.transformOrigin='top left';
+  });
+}
+/* Run on load and resize */
+scaleTileIframes();
+window.addEventListener('resize',scaleTileIframes);
+/* Also run after fonts/layout settle */
+window.addEventListener('load',scaleTileIframes);
+
 /* ── TILE FOCUS ── */
 var focusState={};
 
@@ -708,7 +750,7 @@ function focusTile(shelfId,idx,catId){
   var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
   if(dn)dn.textContent=t.dataset.title||'Video Title';
   if(ds)ds.textContent=t.dataset.sub||'';
-  /* Scroll the tile into view within its shelf-outer container */
+  /* Scroll tile into view within shelf-outer */
   var outer=shelf.parentElement;
   var tileLeft=t.offsetLeft;
   var tileCenter=tileLeft+t.offsetWidth/2;
@@ -732,9 +774,7 @@ document.querySelectorAll('.tile').forEach(function(t){
   });
 });
 
-/* ── SCROLL-BASED TILE FOCUS — no JS dragging needed ── */
-/* The browser handles all touch/swipe natively via overflow-x:auto + scroll-snap.
-   We just listen to scroll events and update which tile is "focused". */
+/* ── SCROLL-BASED TILE FOCUS ── */
 document.querySelectorAll('.shelf-outer').forEach(function(outer){
   var shelf=outer.querySelector('.shelf');if(!shelf)return;
   var ticking=false;
@@ -752,7 +792,6 @@ document.querySelectorAll('.shelf-outer').forEach(function(outer){
         if(dist<minDist){minDist=dist;closest=i;}
       });
       var cat=shelf.id.replace('shelf-','');
-      /* Update focus state and label without re-scrolling */
       tiles.forEach(function(t,i){t.classList.toggle('focused',i===closest);});
       focusState[shelf.id]=closest;
       var ft=tiles[closest];
@@ -786,11 +825,11 @@ function switchCat(cat,el){
   var sec=document.getElementById('cat-'+cat);if(sec)sec.classList.add('active');
   if(el)el.classList.add('active');
   activeShelfId='shelf-'+cat;
-  var outer=document.querySelector('#shelf-'+cat+' .shelf-outer')||document.getElementById('shelf-'+cat);
-  /* Reset scroll to start */
   var shelfOuter=document.getElementById('shelf-'+cat);
   if(shelfOuter&&shelfOuter.parentElement)shelfOuter.parentElement.scrollLeft=0;
   focusTile(activeShelfId,0,cat);
+  /* Re-run scaling in case tiles just became visible */
+  setTimeout(scaleTileIframes,50);
 }
 
 /* ── MODAL ── */
@@ -805,7 +844,11 @@ var scDescs={
 function openModal(embed,title,sub,cat){
   var finalSrc=embed;
   if(embed.includes('youtube.com')||embed.includes('youtu.be'))finalSrc=embed+(embed.includes('?')?'&':'?')+'autoplay=1&rel=0';
-  if(embed.includes('drive.google.com'))finalSrc=embed.replace('/view','/preview').replace(/[?&]autoplay=1/,'');
+  /* Drive: strip any stray autoplay params, append rm=minimal to hide Drive UI chrome */
+  if(embed.includes('drive.google.com')){
+    finalSrc=embed.replace('/view','/preview').replace(/[?&]autoplay=1/,'');
+    finalSrc+=finalSrc.includes('?')?'&rm=minimal':'?rm=minimal';
+  }
   document.getElementById('modal-iframe').src=finalSrc;
   document.getElementById('modal-title').textContent=(title||'Video Title').toUpperCase();
   document.getElementById('sc-stat-title').textContent=title||'—';
@@ -819,7 +862,10 @@ function playFocused(shelfId,cat){
   var t=shelf.querySelectorAll('.tile')[idx];
   if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
 }
-function closeModal(){document.getElementById('modal').classList.remove('open');document.getElementById('modal-iframe').src='';}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modal-iframe').src='';
+}
 function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
 /* ── INIT ── */
@@ -828,23 +874,6 @@ function closeModalOutside(e){if(e.target===document.getElementById('modal'))clo
   focusTile(id,0,cat);
 });
 activeShelfId='shelf-trippy';
-
-/* ── INJECT TILE-COVER DIVS (fixes big thumbnail issue) ── */
-/* Every tile-inner gets a cover div if it doesn't already have one */
-document.querySelectorAll('.tile-inner').forEach(function(inner){
-  if(!inner.querySelector('.tile-cover')){
-    var cover=document.createElement('div');
-    cover.className='tile-cover';
-    inner.appendChild(cover);
-  }
-  /* Also ensure tile-play-btn is inside tile-inner */
-  var playBtn=inner.querySelector('.tile-play-btn');
-  if(!playBtn){
-    playBtn=document.createElement('div');
-    playBtn.className='tile-play-btn';
-    inner.appendChild(playBtn);
-  }
-});
 </script>
 </body>
 </html>

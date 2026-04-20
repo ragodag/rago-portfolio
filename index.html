@@ -297,7 +297,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-body{display:grid;grid-template-columns:1.4fr 1fr;}
 .sc-left{padding:20px;border-right:1px solid rgba(200,0,0,0.25);display:flex;flex-direction:column;gap:12px;background:rgba(0,0,0,0.3);}
 
-/* ── FIXED: Modal video — reliable 16:9 that never clips ── */
+/* ── Modal video frame ── */
 .sc-vid-frame{
   position:relative;
   width:100%;
@@ -310,15 +310,34 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 }
 .sc-vid-frame iframe{
   position:absolute;
-  /* Pull iframe up to hide Drive's toolbar chrome */
-  top:-68px;
-  left:0;
-  width:100%;
-  height:calc(100% + 68px);
-  border:none;
-  display:block;
+  top:0;left:0;
+  width:100%;height:100%;
+  border:none;display:block;
   transform:none !important;
-  transform-origin:top left;
+}
+.sc-vid-frame video{
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:100%;
+  object-fit:contain;
+  background:#000;
+  display:block;
+}
+.sc-drive-fallback{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;background:linear-gradient(135deg,#1a0000,#0d0000);
+}
+.sc-drive-fallback a{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 28px;
+  background:rgba(180,0,0,0.4);border:1px solid rgba(220,0,0,0.8);
+  color:#fff;font-family:'Orbitron',sans-serif;font-size:11px;
+  letter-spacing:0.18em;text-transform:uppercase;border-radius:3px;
+  text-decoration:none;
+}
+.sc-drive-fallback p{
+  font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;
 }
 
 .sc-vid-corners{position:absolute;inset:0;z-index:3;pointer-events:none;}
@@ -647,9 +666,14 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     </div>
     <div class="sc-body">
       <div class="sc-left">
-        <div class="sc-vid-frame">
+        <div class="sc-vid-frame" id="sc-vid-frame">
           <div class="sc-vid-corners"><span class="sc-c tl"></span><span class="sc-c tr"></span><span class="sc-c bl"></span><span class="sc-c br"></span></div>
-          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen" style="width:100%;height:100%;border:none;display:block;transform:none;"></iframe>
+          <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen" style="display:none;"></iframe>
+          <video id="modal-video" controls playsinline style="display:none;"></video>
+          <div class="sc-drive-fallback" id="modal-drive-fallback" style="display:none;">
+            <a id="modal-drive-link" href="#" target="_blank">▶ &nbsp;OPEN VIDEO</a>
+            <p>Tap to watch in Google Drive</p>
+          </div>
         </div>
         <div class="sc-nameplate"><div class="sc-nameplate-inner"><div class="sc-nameplate-icon">▶</div><div id="modal-title" class="sc-nameplate-title">VIDEO TITLE</div></div></div>
       </div>
@@ -665,7 +689,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="sc-desc" id="sc-desc">A cinematic visual work directed and shot by RAGO.</div>
         <div class="sc-divider"></div>
         <div class="sc-actions">
-          <button class="sc-btn primary" onclick="document.getElementById('modal-iframe').src=document.getElementById('modal-iframe').src">▶ PLAY</button>
+          <button class="sc-btn primary" onclick="(function(){var v=document.getElementById('modal-video');if(v&&v.src)v.play();else{var f=document.getElementById('modal-iframe');f.src=f.src;}})()">▶ PLAY</button>
           <button class="sc-btn" onclick="closeModal()">✕ CLOSE</button>
         </div>
         <div class="sc-hint">2P/ Press START button to begin.</div>
@@ -843,26 +867,44 @@ var scDescs={
 };
 
 function openModal(embed,title,sub,cat){
-  var finalSrc=embed;
-  var frame=document.querySelector('.sc-vid-frame');
   var modalIframe=document.getElementById('modal-iframe');
+  var modalVideo=document.getElementById('modal-video');
+  var modalFallback=document.getElementById('modal-drive-fallback');
+  var modalDriveLink=document.getElementById('modal-drive-link');
 
-  if(embed.includes('youtube.com')||embed.includes('youtu.be')){
-    finalSrc=embed+(embed.includes('?')?'&':'?')+'autoplay=1&rel=0';
-    /* YouTube has no chrome bar — standard 16:9, iframe flush to top */
-    frame.style.paddingBottom='56.25%';
-    modalIframe.style.top='0';
-    modalIframe.style.height='100%';
-  }
+  /* Hide all video elements first */
+  modalIframe.style.display='none';
+  modalVideo.style.display='none';
+  modalFallback.style.display='none';
+  modalIframe.src='';
+  modalVideo.src='';
 
   if(embed.includes('drive.google.com')){
-    finalSrc=embed.replace('/view','/preview');
-    /* Drive renders a ~68px toolbar — pull iframe up and expand to hide it */
-    frame.style.paddingBottom='calc(56.25% + 68px)';
-    modalIframe.style.top='-68px';
-    modalIframe.style.height='calc(100% + 68px)';
+    /* Extract file ID from Drive URL and build a direct stream URL */
+    var fileId=embed.match(/\/d\/([^\/\?]+)/);
+    if(fileId&&fileId[1]){
+      var directUrl='https://drive.google.com/uc?export=download&id='+fileId[1];
+      var previewUrl='https://drive.google.com/file/d/'+fileId[1]+'/preview';
+      /* Try native video tag first — cleanest result */
+      modalVideo.src=directUrl;
+      modalVideo.style.display='block';
+      /* If video fails to load (CORS/auth), fall back to open-in-drive button */
+      modalVideo.onerror=function(){
+        modalVideo.style.display='none';
+        modalDriveLink.href=previewUrl;
+        modalFallback.style.display='flex';
+      };
+    }
+  } else {
+    /* YouTube and everything else — standard iframe */
+    var finalSrc=embed;
+    if(embed.includes('youtube.com')||embed.includes('youtu.be')){
+      finalSrc=embed+(embed.includes('?')?'&':'?')+'autoplay=1&rel=0';
+    }
+    modalIframe.src=finalSrc;
+    modalIframe.style.display='block';
   }
-  document.getElementById('modal-iframe').src=finalSrc;
+
   document.getElementById('modal-title').textContent=(title||'Video Title').toUpperCase();
   document.getElementById('sc-stat-title').textContent=title||'—';
   document.getElementById('sc-stat-artist').textContent=sub||'—';
@@ -877,7 +919,11 @@ function playFocused(shelfId,cat){
 }
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-iframe').src='';
+  var modalIframe=document.getElementById('modal-iframe');
+  var modalVideo=document.getElementById('modal-video');
+  modalIframe.src='';
+  modalVideo.pause();
+  modalVideo.src='';
 }
 function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 

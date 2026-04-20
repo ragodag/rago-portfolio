@@ -11,33 +11,85 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --tile-w:clamp(200px,42vw,300px);
+  --tile-w:clamp(200px,38vw,300px);
   --tile-h:calc(var(--tile-w)*0.5625);
   --white:#fff0f0;
   --glow:rgba(200,0,0,0.4);
+  --nav-h:60px;
 }
 html{scroll-behavior:smooth;}
-body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);overflow-x:hidden;min-height:100vh;}
+body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);overflow-x:hidden;}
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
-.page{position:relative;z-index:1;}
 
-/* NAV */
-#topbar{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:10px 32px;background:rgba(20,0,0,0.75);backdrop-filter:blur(16px);border-bottom:1px solid rgba(180,0,0,0.2);}
+/* ─── NAV ─── */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:var(--nav-h);
+  background:rgba(20,0,0,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(180,0,0,0.25);
+}
 .tb-left{display:flex;align-items:center;gap:20px;}
-.ps-sym{width:38px;height:38px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1.2;color:rgba(255,255,255,0.5);font-weight:600;text-align:center;}
-.tb-nav{display:flex;gap:4px;}
-.tb-nav-item{padding:6px 16px;font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:0.14em;color:rgba(255,255,255,0.4);cursor:pointer;border-radius:3px;border:none;background:none;text-transform:uppercase;position:relative;transition:color 0.2s,background 0.2s;}
-.tb-nav-item::after{content:'';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,transparent,rgba(220,60,60,0.9),transparent);transition:width 0.25s;}
-.tb-nav-item:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.05);}
+.ps-sym{width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:9px;line-height:1.2;color:rgba(255,255,255,0.4);font-weight:600;text-align:center;}
+.tb-nav{display:flex;gap:2px;}
+.tb-nav-item{
+  padding:8px 18px;
+  font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.14em;
+  color:rgba(255,255,255,0.4);cursor:pointer;border:none;background:none;
+  text-transform:uppercase;border-radius:3px;
+  transition:color 0.2s,background 0.2s;
+  position:relative;
+}
+.tb-nav-item::after{
+  content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  width:0;height:2px;background:linear-gradient(90deg,transparent,rgba(220,60,60,0.9),transparent);
+  transition:width 0.25s;
+}
+.tb-nav-item:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.04);}
 .tb-nav-item.active{color:#fff;}
 .tb-nav-item.active::after{width:70%;}
-.tb-right{display:flex;align-items:center;gap:18px;}
+.tb-right{display:flex;align-items:center;gap:16px;}
 .tb-user{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.8);}
-.tb-tag{font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.06em;}
-.tb-clock{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:0.1em;color:rgba(255,255,255,0.65);}
+.tb-tag{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.06em;}
+.tb-clock{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.55);}
 
-/* HERO */
-#hero{min-height:100vh;display:flex;align-items:center;padding:80px 60px 60px;position:relative;overflow:hidden;}
+/* ─── SECTION PAGES ─── */
+.page-section{
+  min-height:100vh;
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;
+  padding-top:var(--nav-h);
+}
+
+/* ─── SECTION HEADER BAR ─── */
+.section-header{
+  display:flex;align-items:center;gap:20px;
+  padding:28px 60px 20px;
+  border-bottom:1px solid rgba(180,0,0,0.2);
+  background:rgba(0,0,0,0.25);
+}
+.section-label{
+  font-size:0.65rem;letter-spacing:0.35em;color:rgba(255,255,255,0.3);
+  text-transform:uppercase;
+}
+.section-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.4rem,3.5vw,2.2rem);
+  font-weight:700;letter-spacing:0.1em;color:#fff;
+  text-shadow:0 0 30px rgba(200,0,0,0.5);
+}
+.section-num{
+  font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;
+  color:rgba(180,0,0,0.12);letter-spacing:0.1em;margin-left:auto;
+  line-height:1;user-select:none;
+}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:80px 60px 60px;position:relative;overflow:hidden;
+  z-index:1;
+}
 .hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,0,0,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(200,0,0,0.06) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;}
 .hero-bg-grid::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(120,0,0,0.35) 0%,transparent 70%);}
 .hero-content{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;max-width:1300px;margin:0 auto;width:100%;}
@@ -66,33 +118,52 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .corner-mark{position:absolute;width:16px;height:16px;border-color:rgba(200,0,0,0.7);border-style:solid;}
 .corner-mark.tl{top:-2px;left:-2px;border-width:2px 0 0 2px;}.corner-mark.tr{top:-2px;right:-2px;border-width:2px 2px 0 0;}
 .corner-mark.bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px;}.corner-mark.br{bottom:-2px;right:-2px;border-width:0 2px 2px 0;}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,0.25);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;background:none;border:none;animation:scrollBounce 2.5s ease-in-out infinite;}
-.scroll-hint .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(200,0,0,0.6),transparent);}
-@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
 
-/* PORTFOLIO */
-#portfolio{padding:60px 0 80px;position:relative;}
-.port-header{padding:0 60px;margin-bottom:24px;}
-.port-eyebrow{font-size:0.7rem;letter-spacing:0.3em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:6px;}
-.port-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:0.1em;color:#fff;text-shadow:0 0 30px rgba(200,0,0,0.5);}
-.page-tabs-wrap{padding:0 60px;margin-bottom:20px;border-bottom:1px solid rgba(180,0,0,0.2);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-.page-tabs-wrap::-webkit-scrollbar{display:none;}
-.page-tabs{display:flex;gap:0;min-width:max-content;}
-.pg-tab{padding:10px 22px;font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:0.14em;color:rgba(255,255,255,0.35);cursor:pointer;border:none;background:none;text-transform:uppercase;border-bottom:2px solid transparent;transition:all 0.2s;position:relative;top:1px;white-space:nowrap;}
-.pg-tab:hover{color:rgba(255,255,255,0.7);}
-.pg-tab.active{color:#fff;border-bottom-color:rgba(220,60,60,0.9);}
-.cat-tabs-wrap{padding:0 60px;margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+/* ─── SCROLL NEXT ARROW ─── */
+.scroll-next{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(255,255,255,0.25);font-family:'Orbitron',sans-serif;font-size:8px;
+  letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;
+  background:none;border:none;
+  animation:bounce 2.5s ease-in-out infinite;z-index:10;
+}
+.scroll-next .sn-line{width:1px;height:32px;background:linear-gradient(to bottom,rgba(200,0,0,0.6),transparent);}
+.scroll-next:hover{color:rgba(255,80,80,0.7);}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* ─── SECTION DIVIDERS ─── */
+.section-divider{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,0,0,0.5),transparent);
+}
+
+/* ─── PORTFOLIO SECTIONS ─── */
+.portfolio-section{
+  flex:1;display:flex;flex-direction:column;
+  padding-bottom:80px;
+}
+
+/* ─── CAT TABS (Music sub-categories) ─── */
+.cat-tabs-wrap{padding:16px 60px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .cat-tabs-wrap::-webkit-scrollbar{display:none;}
 .cat-tabs{display:flex;gap:2px;min-width:max-content;}
-.cat-tab{padding:7px 18px;font-size:10.5px;letter-spacing:0.1em;color:rgba(255,255,255,0.35);cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);border-radius:3px;font-family:'Rajdhani',sans-serif;font-weight:600;text-transform:uppercase;transition:all 0.2s;white-space:nowrap;}
-.cat-tab:hover{color:rgba(255,255,255,0.75);border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.07);}
+.cat-tab{
+  padding:8px 20px;font-size:10px;letter-spacing:0.1em;
+  color:rgba(255,255,255,0.35);cursor:pointer;
+  border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);
+  border-radius:3px;font-family:'Rajdhani',sans-serif;font-weight:600;
+  text-transform:uppercase;transition:all 0.2s;white-space:nowrap;
+}
+.cat-tab:hover{color:rgba(255,255,255,0.75);border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);}
 .cat-tab.active{background:rgba(160,0,0,0.2);border-color:rgba(200,0,0,0.5);color:#fff;}
+.cat-section{display:none;}.cat-section.active{display:block;}
 
-/* SHELF */
-.shelf-outer{position:relative;padding:16px 60px 32px;overflow:hidden;touch-action:pan-y;}
+/* ─── SHELF ─── */
+.shelf-outer{position:relative;padding:20px 60px 24px;overflow:hidden;touch-action:pan-y;}
 .shelf{display:flex;gap:16px;transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1);will-change:transform;}
 
-/* TILE */
+/* ─── TILE ─── */
 .tile{flex-shrink:0;width:var(--tile-w);cursor:pointer;transition:all 0.3s cubic-bezier(0.25,0.8,0.25,1);}
 .tile-inner{width:var(--tile-w);height:var(--tile-h);border-radius:4px;overflow:hidden;border:2px solid rgba(255,255,255,0.07);background:#000918;position:relative;transition:all 0.3s;}
 .tile-inner iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:none;}
@@ -113,25 +184,46 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .tile.focused .tile-inner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(220,0,0,0.15) 0%,transparent 50%);pointer-events:none;z-index:2;}
 .tile.focused .tile-label h3{color:#fff;}
 
-/* DETAIL */
-.detail-panel{padding:0 60px;display:flex;align-items:center;gap:20px;min-height:56px;opacity:0;transform:translateY(6px);transition:all 0.3s;flex-wrap:wrap;}
-.detail-panel.show{opacity:1;transform:translateY(0);}
+/* ─── DETAIL PANEL ─── */
+.detail-panel{padding:0 60px;display:flex;align-items:center;gap:20px;min-height:56px;flex-wrap:wrap;}
 .detail-name{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.12em;color:#fff;text-shadow:0 0 20px rgba(220,0,0,0.9);}
 .detail-sub{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.08em;margin-top:2px;}
 .detail-btns{display:flex;gap:8px;margin-left:auto;}
 .dbt{padding:7px 18px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.75);font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.14em;cursor:pointer;border-radius:3px;display:flex;align-items:center;gap:7px;transition:all 0.2s;white-space:nowrap;}
 .dbt:hover,.dbt.primary{background:rgba(180,0,0,0.2);border-color:rgba(200,0,0,0.6);color:#fff;}
 .dbt .dbt-ico{width:16px;height:16px;border-radius:50%;background:rgba(80,160,255,0.3);display:flex;align-items:center;justify-content:center;font-size:7px;}
-.pg-panel{display:none;}.pg-panel.active{display:block;}
-.cat-section{display:none;}.cat-section.active{display:block;}
 
-/* BOTTOM BAR */
+/* ─── NEXT SECTION BUTTON ─── */
+.next-section-bar{
+  margin-top:auto;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px 60px;
+  border-top:1px solid rgba(180,0,0,0.15);
+  gap:20px;
+}
+.next-section-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 28px;
+  background:transparent;border:1px solid rgba(180,0,0,0.4);
+  color:rgba(255,255,255,0.6);font-family:'Orbitron',sans-serif;
+  font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
+  cursor:pointer;border-radius:3px;transition:all 0.3s;
+}
+.next-section-btn:hover{border-color:rgba(255,80,80,0.7);color:#fff;background:rgba(180,0,0,0.1);}
+.next-section-btn.primary{border-color:rgba(200,0,0,0.6);color:#fff;background:rgba(180,0,0,0.1);}
+.next-section-btn.primary:hover{background:rgba(200,0,0,0.2);}
+.section-progress{display:flex;gap:8px;align-items:center;}
+.sp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;}
+.sp-dot.active{background:rgba(220,60,60,0.9);width:20px;border-radius:3px;}
+.sp-dot:hover{background:rgba(255,80,80,0.5);}
+
+/* ─── BOTTOM BAR ─── */
 #bottombar{position:fixed;bottom:0;left:0;right:0;z-index:500;padding:8px 28px;background:rgba(15,0,0,0.75);backdrop-filter:blur(12px);border-top:1px solid rgba(180,0,0,0.15);display:flex;align-items:center;justify-content:flex-end;gap:20px;}
 .bbt{display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.07em;}
 .psbtn{width:17px;height:17px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;}
 .psbtn.x{background:#cc2222;}.psbtn.o{background:#991111;}.psbtn.sq{background:#7a1a1a;}.psbtn.tri{background:#550000;}
 
-/* MODAL */
+/* ─── MODAL ─── */
 #modal{position:fixed;inset:0;z-index:2000;background:rgba(8,0,0,0.97);display:none;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;padding:16px;overflow-y:auto;}
 #modal.open{display:flex;}
 .sc-overlay{width:min(95vw,1100px);background:linear-gradient(135deg,#1a0000 0%,#0d0000 100%);border:2px solid rgba(200,0,0,0.6);border-radius:4px;overflow:hidden;box-shadow:0 0 60px rgba(180,0,0,0.5),inset 0 0 60px rgba(0,0,0,0.5);position:relative;animation:scIn 0.25s cubic-bezier(0.25,0.8,0.25,1);margin:auto;}
@@ -167,9 +259,9 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-btn.primary:hover{background:rgba(200,0,0,0.5);}
 .sc-hint{font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.2);margin-top:auto;}
 
-/* SPLASH */
+/* ─── SPLASH ─── */
 #splash{position:fixed;inset:0;z-index:10000;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;animation:splashOut 0.6s ease 2.8s forwards;pointer-events:none;}
-@keyframes splashOut{0%{opacity:1;}100%{opacity:0;}}
+@keyframes splashOut{0%{opacity:1;}100%{opacity:0;pointer-events:none;}}
 .splash-logo{font-family:'Orbitron',sans-serif;font-size:clamp(3rem,10vw,7rem);font-weight:900;letter-spacing:0.3em;color:#fff;text-shadow:0 0 40px rgba(200,0,0,0.9);}
 .splash-sub{font-size:0.9rem;letter-spacing:0.4em;color:rgba(255,255,255,0.4);text-transform:uppercase;animation:blink 1.2s step-end infinite;}
 .splash-bar-wrap{width:240px;height:2px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-top:8px;}
@@ -177,29 +269,47 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 @keyframes loadBar{to{width:100%;}}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-/* RESPONSIVE */
+/* ─── MOBILE CLOSE BUTTON ─── */
+.modal-close-btn{
+  display:none;
+  position:absolute;top:12px;right:12px;z-index:50;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(160,0,0,0.92);border:2px solid rgba(255,80,80,0.8);
+  color:#fff;font-size:22px;line-height:1;
+  align-items:center;justify-content:center;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  flex-shrink:0;
+}
+@media(hover:none){.modal-close-btn{display:flex;}}
+@media(max-width:700px){.modal-close-btn{display:flex;}}
+
+/* ─── RESPONSIVE ─── */
 @media(max-width:900px){
-  :root{--tile-w:clamp(200px,45vw,280px);}
+  :root{--tile-w:clamp(200px,44vw,280px);}
   .hero-content{grid-template-columns:1fr;}
   .hero-image{display:none;}
   #hero{padding:80px 24px 60px;}
-  .port-header,.page-tabs-wrap,.cat-tabs-wrap,.shelf-outer,.detail-panel{padding-left:20px;padding-right:20px;}
+  .section-header,.shelf-outer,.detail-panel,.cat-tabs-wrap,.next-section-bar{padding-left:20px;padding-right:20px;}
   .tb-nav{display:none;}
 }
 @media(max-width:600px){
-  :root{--tile-w:clamp(240px,80vw,340px);}
+  :root{--tile-w:clamp(240px,78vw,340px);}
   #hero{padding:76px 16px 56px;}
-  #topbar{padding:10px 16px;}
+  #topbar{padding:0 16px;}
   .tb-right .tb-tag,.tb-right .tb-clock{display:none;}
   .hero-stats{gap:20px;}
-  .port-header,.shelf-outer,.detail-panel,.page-tabs-wrap,.cat-tabs-wrap{padding-left:16px;padding-right:16px;}
+  .section-header,.shelf-outer,.detail-panel,.cat-tabs-wrap,.next-section-bar{padding-left:16px;padding-right:16px;}
   .detail-btns{margin-left:0;width:100%;}
   .dbt{flex:1;justify-content:center;}
   .sc-body{grid-template-columns:1fr;}
   .sc-left{border-right:none;border-bottom:1px solid rgba(200,0,0,0.25);}
-  .sc-overlay{max-height:90vh;overflow-y:auto;}
+  .sc-overlay{max-height:92vh;overflow-y:auto;position:relative;}
   #bottombar .bbt:nth-child(3),#bottombar .bbt:nth-child(4){display:none;}
   #bottombar{padding:8px 16px;gap:12px;}
+  .next-section-btn span{display:none;}
+  /* Force Google Drive iframes to fill their container properly */
+  .sc-vid-frame{width:100%!important;}
+  .sc-vid-frame iframe{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;}
 }
 </style>
 </head>
@@ -212,14 +322,15 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
 </div>
 
+<!-- NAV -->
 <nav id="topbar">
   <div class="tb-left">
     <div class="ps-sym">△○<br>×□</div>
     <div class="tb-nav">
-      <button class="tb-nav-item active" onclick="scrollTo(0,0)">Home</button>
-      <button class="tb-nav-item" onclick="goToPortfolio('music')">Music Videos</button>
-      <button class="tb-nav-item" onclick="goToPortfolio('cinematic')">Cinematic</button>
-      <button class="tb-nav-item" onclick="goToPortfolio('experimental')">Experimental</button>
+      <button class="tb-nav-item" id="nav-home" onclick="scrollToSection('hero')">Home</button>
+      <button class="tb-nav-item" id="nav-music" onclick="scrollToSection('section-music')">Music Videos</button>
+      <button class="tb-nav-item" id="nav-cinematic" onclick="scrollToSection('section-cinematic')">Cinematic</button>
+      <button class="tb-nav-item" id="nav-experimental" onclick="scrollToSection('section-experimental')">Experimental</button>
     </div>
   </div>
   <div class="tb-right">
@@ -230,7 +341,10 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </div>
 </nav>
 
-<section id="hero" class="page">
+<!-- ═══════════════════════════════════════════════════
+     SECTION 0 — HERO
+═══════════════════════════════════════════════════ -->
+<section id="hero" class="page-section">
   <div class="hero-bg-grid"></div>
   <div class="hero-content">
     <div class="hero-text">
@@ -238,7 +352,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <p class="hero-hello">Hello, I'm</p>
       <h1 class="hero-name">RAGO</h1>
       <p class="hero-desc">Crafting cinematic music videos, short films, and experimental visual work. Based in the UK, shooting everywhere.</p>
-      <button class="hero-cta" onclick="goToPortfolio('music')">
+      <button class="hero-cta" onclick="scrollToSection('section-music')">
         View My Work
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
@@ -260,26 +374,26 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       </div>
     </div>
   </div>
-  <button class="scroll-hint" onclick="goToPortfolio('music')">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
+  <button class="scroll-next" onclick="scrollToSection('section-music')">
+    <div class="sn-line"></div>
+    <span>Music Videos</span>
   </button>
 </section>
 
-<section id="portfolio" class="page">
-  <div class="port-header">
-    <p class="port-eyebrow">Selected Work</p>
-    <h2 class="port-title">Portfolio</h2>
-  </div>
-  <div class="page-tabs-wrap">
-    <div class="page-tabs">
-      <button class="pg-tab active" onclick="switchPage('music',this)">Music Videos</button>
-      <button class="pg-tab" onclick="switchPage('cinematic',this)">Cinematic Projects</button>
-      <button class="pg-tab" onclick="switchPage('experimental',this)">Experimental</button>
+<!-- ═══════════════════════════════════════════════════
+     SECTION 1 — MUSIC VIDEOS
+═══════════════════════════════════════════════════ -->
+<section id="section-music" class="page-section">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Selected Work · 01</div>
+      <div class="section-title">Music Videos</div>
     </div>
+    <div class="section-num">01</div>
   </div>
 
-  <div class="pg-panel active" id="panel-music">
+  <div class="portfolio-section">
+    <!-- Sub-category tabs -->
     <div class="cat-tabs-wrap">
       <div class="cat-tabs">
         <button class="cat-tab active" onclick="switchCat('trippy',this)">🌀 Trippy / Underground</button>
@@ -287,6 +401,8 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <button class="cat-tab" onclick="switchCat('slowcin',this)">🎬 Slow Cinematic</button>
       </div>
     </div>
+
+    <!-- Trippy -->
     <div class="cat-section active" id="cat-trippy">
       <div class="shelf-outer"><div class="shelf" id="shelf-trippy">
         <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
@@ -296,43 +412,73 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
-      <div class="detail-panel show" id="dp-trippy">
+      <div class="detail-panel" id="dp-trippy">
         <div class="detail-info"><div class="detail-name" id="dn-trippy">Video Title</div><div class="detail-sub" id="ds-trippy">Artist / Info</div></div>
-        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-trippy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
+        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-trippy','trippy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
       </div>
     </div>
+
+    <!-- Energy -->
     <div class="cat-section" id="cat-energy">
       <div class="shelf-outer"><div class="shelf" id="shelf-energy">
         <div class="tile focused" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
-      <div class="detail-panel show" id="dp-energy">
+      <div class="detail-panel" id="dp-energy">
         <div class="detail-info"><div class="detail-name" id="dn-energy">Video Title</div><div class="detail-sub" id="ds-energy">Artist / Info</div></div>
-        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-energy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
+        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-energy','energy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
       </div>
     </div>
+
+    <!-- Slow Cinematic -->
     <div class="cat-section" id="cat-slowcin">
       <div class="shelf-outer"><div class="shelf" id="shelf-slowcin">
         <div class="tile focused" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
-      <div class="detail-panel show" id="dp-slowcin">
+      <div class="detail-panel" id="dp-slowcin">
         <div class="detail-info"><div class="detail-name" id="dn-slowcin">Video Title</div><div class="detail-sub" id="ds-slowcin">Artist / Info</div></div>
-        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-slowcin')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
+        <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-slowcin','slowcin')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
       </div>
     </div>
   </div>
 
-  <div class="pg-panel" id="panel-cinematic">
-    <div class="shelf-outer"><div class="shelf" id="shelf-cinematic">
+  <div class="next-section-bar">
+    <div class="section-progress">
+      <div class="sp-dot" onclick="scrollToSection('hero')"></div>
+      <div class="sp-dot active" onclick="scrollToSection('section-music')"></div>
+      <div class="sp-dot" onclick="scrollToSection('section-cinematic')"></div>
+      <div class="sp-dot" onclick="scrollToSection('section-experimental')"></div>
+    </div>
+    <button class="next-section-btn primary" onclick="scrollToSection('section-cinematic')">
+      <span>Cinematic Projects</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 2 — CINEMATIC
+═══════════════════════════════════════════════════ -->
+<section id="section-cinematic" class="page-section">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Selected Work · 02</div>
+      <div class="section-title">Cinematic Projects</div>
+    </div>
+    <div class="section-num">02</div>
+  </div>
+
+  <div class="portfolio-section">
+    <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-cinematic">
       <div class="tile focused" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
@@ -340,14 +486,44 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
     </div></div>
-    <div class="detail-panel show" id="dp-cinematic">
+    <div class="detail-panel" id="dp-cinematic">
       <div class="detail-info"><div class="detail-name" id="dn-cinematic">Project Title</div><div class="detail-sub" id="ds-cinematic">Director / Info</div></div>
-      <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-cinematic')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
+      <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-cinematic','cinematic')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
     </div>
   </div>
 
-  <div class="pg-panel" id="panel-experimental">
-    <div class="shelf-outer"><div class="shelf" id="shelf-experimental">
+  <div class="next-section-bar">
+    <div class="section-progress">
+      <div class="sp-dot" onclick="scrollToSection('hero')"></div>
+      <div class="sp-dot" onclick="scrollToSection('section-music')"></div>
+      <div class="sp-dot active" onclick="scrollToSection('section-cinematic')"></div>
+      <div class="sp-dot" onclick="scrollToSection('section-experimental')"></div>
+    </div>
+    <button class="next-section-btn" onclick="scrollToSection('section-music')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span>Music Videos</span>
+    </button>
+    <button class="next-section-btn primary" onclick="scrollToSection('section-experimental')">
+      <span>Experimental</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 3 — EXPERIMENTAL
+═══════════════════════════════════════════════════ -->
+<section id="section-experimental" class="page-section">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Selected Work · 03</div>
+      <div class="section-title">Experimental</div>
+    </div>
+    <div class="section-num">03</div>
+  </div>
+
+  <div class="portfolio-section">
+    <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-experimental">
       <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
@@ -355,13 +531,31 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
     </div></div>
-    <div class="detail-panel show" id="dp-experimental">
+    <div class="detail-panel" id="dp-experimental">
       <div class="detail-info"><div class="detail-name" id="dn-experimental">Project Title</div><div class="detail-sub" id="ds-experimental">Description / Info</div></div>
-      <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-experimental')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
+      <div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-experimental','experimental')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div>
     </div>
+  </div>
+
+  <div class="next-section-bar">
+    <div class="section-progress">
+      <div class="sp-dot" onclick="scrollToSection('hero')"></div>
+      <div class="sp-dot" onclick="scrollToSection('section-music')"></div>
+      <div class="sp-dot" onclick="scrollToSection('section-cinematic')"></div>
+      <div class="sp-dot active" onclick="scrollToSection('section-experimental')"></div>
+    </div>
+    <button class="next-section-btn" onclick="scrollToSection('section-cinematic')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span>Cinematic</span>
+    </button>
+    <button class="next-section-btn primary" onclick="scrollToSection('hero')">
+      <span>Back to Top</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:rotate(-90deg)"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 </section>
 
+<!-- BOTTOM BAR -->
 <div id="bottombar">
   <div class="bbt"><span class="psbtn x">X</span>PLAY</div>
   <div class="bbt"><span class="psbtn o">O</span>CLOSE</div>
@@ -369,8 +563,10 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   <div class="bbt"><span class="psbtn tri">△</span>OPTIONS</div>
 </div>
 
+<!-- MODAL -->
 <div id="modal" onclick="closeModalOutside(event)">
-  <div class="sc-overlay">
+  <div class="sc-overlay" style="position:relative;">
+    <button class="modal-close-btn" onclick="closeModal()" aria-label="Close">&#x2715;</button>
     <div class="sc-header">
       <div><span class="sc-bracket">[</span><span class="sc-header-title">SELECT VIDEO</span><span class="sc-bracket">]</span></div>
       <div><span class="sc-blink">▶ PRESS X TO PLAY</span></div>
@@ -405,9 +601,11 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 </div>
 
 <script>
+/* ── CLOCK ── */
 function tick(){var n=new Date(),el=document.getElementById('clock');if(el)el.textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
 tick();setInterval(tick,15000);
 
+/* ── BG PARTICLES ── */
 (function(){
   var c=document.getElementById('bg-canvas');if(!c)return;
   var ctx=c.getContext('2d'),W,H,pts=[];
@@ -417,15 +615,37 @@ tick();setInterval(tick,15000);
   (function frame(){ctx.clearRect(0,0,W,H);pts.forEach(function(p){ctx.beginPath();ctx.arc(p.x%W,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(255,80,80,'+p.a+')';ctx.fill();p.y-=p.vy;p.vx=Math.sin(p.y*0.015)*0.25;p.x+=p.vx;if(p.y<-4){p.y=H+4;p.x=Math.random()*W;}});requestAnimationFrame(frame);})();
 })();
 
-var focusState={},activeShelfId='shelf-trippy',_activeCat='trippy';
+/* ── SCROLL TO SECTION ── */
+function scrollToSection(id){
+  var el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}
 
-function focusTile(shelfId,idx){
+/* ── NAV ACTIVE STATE via IntersectionObserver ── */
+var navMap={'hero':'nav-home','section-music':'nav-music','section-cinematic':'nav-cinematic','section-experimental':'nav-experimental'};
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting&&e.intersectionRatio>0.4){
+      document.querySelectorAll('.tb-nav-item').forEach(function(b){b.classList.remove('active');});
+      var btn=document.getElementById(navMap[e.target.id]);
+      if(btn)btn.classList.add('active');
+    }
+  });
+},{threshold:0.4});
+['hero','section-music','section-cinematic','section-experimental'].forEach(function(id){
+  var el=document.getElementById(id);if(el)observer.observe(el);
+});
+
+/* ── TILE FOCUS ── */
+var focusState={};
+
+function focusTile(shelfId,idx,catId){
   var shelf=document.getElementById(shelfId);if(!shelf)return;
   var tiles=shelf.querySelectorAll('.tile');
   tiles.forEach(function(t,i){t.classList.toggle('focused',i===idx);});
   focusState[shelfId]=idx;
   var t=tiles[idx];if(!t)return;
-  var cat=shelfId.replace('shelf-','');
+  var cat=catId||shelfId.replace('shelf-','');
   var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
   if(dn)dn.textContent=t.dataset.title||'Video Title';
   if(ds)ds.textContent=t.dataset.sub||'';
@@ -434,88 +654,143 @@ function focusTile(shelfId,idx){
   shelf.style.transform='translateX('+(-Math.max(0,off))+'px)';
 }
 
+/* ── TILE INTERACTIONS ── */
 document.querySelectorAll('.tile').forEach(function(t){
-  t.addEventListener('mouseenter',function(){var s=t.closest('.shelf');if(s)focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t));});
-  t.addEventListener('click',function(){if(t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub);});
+  t.addEventListener('mouseenter',function(){
+    var s=t.closest('.shelf');if(!s)return;
+    var cat=s.id.replace('shelf-','');
+    focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),cat);
+  });
+  /* Track touch start position to distinguish tap from swipe */
+  var tTouchX=0,tTouchY=0;
+  t.addEventListener('touchstart',function(e){tTouchX=e.touches[0].clientX;tTouchY=e.touches[0].clientY;},{passive:true});
+  t.addEventListener('touchend',function(e){
+    var dx=Math.abs((e.changedTouches[0]||{clientX:tTouchX}).clientX-tTouchX);
+    var dy=Math.abs((e.changedTouches[0]||{clientY:tTouchY}).clientY-tTouchY);
+    /* Only treat as tap if barely moved */
+    if(dx<10&&dy<10&&t.dataset.embed){
+      var s=t.closest('.shelf');
+      var cat=s?s.id.replace('shelf-',''):'cinematic';
+      openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
+    }
+  },{passive:true});
+  t.addEventListener('click',function(e){
+    /* Avoid double-firing on mobile (touchend already handled it) */
+    if('ontouchstart' in window)return;
+    if(t.dataset.embed){
+      var s=t.closest('.shelf');
+      var cat=s?s.id.replace('shelf-',''):'cinematic';
+      openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
+    }
+  });
 });
 
-/* TOUCH SWIPE */
+/* ── TOUCH SWIPE — velocity-aware flick detection ── */
 document.querySelectorAll('.shelf-outer').forEach(function(outer){
   var shelf=outer.querySelector('.shelf');if(!shelf)return;
-  var sx=0,st=0,drag=false;
+  var sx=0,sy=0,st=0,drag=false,startTime=0,lastX=0,velX=0,isHoriz=null;
   function getX(){var m=(shelf.style.transform||'').match(/translateX\((-?[\d.]+)px\)/);return m?parseFloat(m[1]):0;}
-  outer.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;st=getX();drag=true;shelf.style.transition='none';},{passive:true});
+  outer.addEventListener('touchstart',function(e){
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;
+    st=getX();drag=true;startTime=Date.now();lastX=sx;velX=0;isHoriz=null;
+    shelf.style.transition='none';
+  },{passive:true});
   outer.addEventListener('touchmove',function(e){
     if(!drag)return;
-    var newX=st+(e.touches[0].clientX-sx);
+    var dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
+    if(isHoriz===null){isHoriz=Math.abs(dx)>Math.abs(dy)+4;}
+    if(!isHoriz)return;
+    velX=e.touches[0].clientX-lastX;lastX=e.touches[0].clientX;
+    var newX=st+dx;
     var max=-(shelf.scrollWidth-outer.clientWidth+40);
     shelf.style.transform='translateX('+Math.min(0,Math.max(max,newX))+'px)';
   },{passive:true});
-  outer.addEventListener('touchend',function(){
+  outer.addEventListener('touchend',function(e){
     if(!drag)return;drag=false;
-    shelf.style.transition='transform 0.4s cubic-bezier(0.25,0.8,0.25,1)';
+    if(!isHoriz){
+      /* It was a vertical scroll or tap — don't snap */
+      shelf.style.transition='transform 0.3s ease';
+      return;
+    }
+    shelf.style.transition='transform 0.35s cubic-bezier(0.25,0.8,0.25,1)';
     var tw=(shelf.querySelector('.tile')||{offsetWidth:300}).offsetWidth+16;
-    var idx=Math.max(0,Math.min(Math.round(-getX()/tw),shelf.querySelectorAll('.tile').length-1));
-    focusTile(shelf.id,idx);
+    var elapsed=Date.now()-startTime;
+    var curX=getX();
+    /* Flick: fast swipe in <300ms with meaningful velocity → move one tile */
+    var flick=elapsed<300&&Math.abs(velX)>6;
+    var idx;
+    if(flick){
+      var cur=Math.round(-curX/tw);
+      idx=velX<0?Math.min(cur+1,shelf.querySelectorAll('.tile').length-1):Math.max(cur-1,0);
+    }else{
+      idx=Math.max(0,Math.min(Math.round(-curX/tw),shelf.querySelectorAll('.tile').length-1));
+    }
+    var cat=shelf.id.replace('shelf-','');
+    focusTile(shelf.id,idx,cat);
   },{passive:true});
 });
 
+/* ── KEYBOARD ── */
+var activeShelfId='shelf-trippy';
 document.addEventListener('keydown',function(e){
   var modal=document.getElementById('modal');
   if(modal&&modal.classList.contains('open')){if(e.key==='Escape')closeModal();return;}
   var shelf=document.getElementById(activeShelfId);if(!shelf)return;
   var tiles=shelf.querySelectorAll('.tile'),idx=focusState[activeShelfId]||0;
-  if(e.key==='ArrowRight')focusTile(activeShelfId,Math.min(idx+1,tiles.length-1));
-  if(e.key==='ArrowLeft')focusTile(activeShelfId,Math.max(idx-1,0));
-  if(e.key==='Enter'||e.key===' '){var t=tiles[focusState[activeShelfId]||0];if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub);}
+  var cat=activeShelfId.replace('shelf-','');
+  if(e.key==='ArrowRight')focusTile(activeShelfId,Math.min(idx+1,tiles.length-1),cat);
+  if(e.key==='ArrowLeft')focusTile(activeShelfId,Math.max(idx-1,0),cat);
+  if(e.key==='Enter'||e.key===' '){
+    var t=tiles[focusState[activeShelfId]||0];
+    if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
+  }
 });
 
-function switchPage(page,el){
-  _activeCat=page==='music'?'trippy':page;
-  document.querySelectorAll('.pg-panel').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.pg-tab').forEach(function(b){b.classList.remove('active');});
-  var panel=document.getElementById('panel-'+page);if(panel)panel.classList.add('active');
-  if(el)el.classList.add('active');
-  activeShelfId={music:'shelf-trippy',cinematic:'shelf-cinematic',experimental:'shelf-experimental'}[page]||'shelf-trippy';
-  focusTile(activeShelfId,0);
-}
+/* ── CAT TABS ── */
 function switchCat(cat,el){
-  _activeCat=cat;
-  document.querySelectorAll('#panel-music .cat-section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('#section-music .cat-section').forEach(function(s){s.classList.remove('active');});
   document.querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('active');});
   var sec=document.getElementById('cat-'+cat);if(sec)sec.classList.add('active');
   if(el)el.classList.add('active');
   activeShelfId='shelf-'+cat;
   var shelf=document.getElementById(activeShelfId);if(shelf)shelf.style.transform='';
-  focusTile(activeShelfId,0);
-}
-function goToPortfolio(page){
-  var port=document.getElementById('portfolio');if(port)port.scrollIntoView({behavior:'smooth'});
-  setTimeout(function(){var tabs=document.querySelectorAll('.pg-tab'),map={music:0,cinematic:1,experimental:2};if(map[page]!==undefined&&tabs[map[page]])switchPage(page,tabs[map[page]]);},700);
+  focusTile(activeShelfId,0,cat);
 }
 
-var scDescs={trippy:"An underground visual journey — hypnotic textures and psychedelic movement captured through RAGO's lens.",energy:"High-octane direction. Raw energy translated into kinetic visuals that hit as hard as the track.",slowcin:"Slow-burn cinematic storytelling. Every frame considered, every cut intentional.",cinematic:"A short-form visual work pushing the boundaries of narrative filmmaking.",experimental:"Boundary-pushing visual exploration — form, light, and motion as pure language."};
+/* ── MODAL ── */
+var scDescs={
+  trippy:"An underground visual journey — hypnotic textures and psychedelic movement captured through RAGO's lens.",
+  energy:"High-octane direction. Raw energy translated into kinetic visuals that hit as hard as the track.",
+  slowcin:"Slow-burn cinematic storytelling. Every frame considered, every cut intentional.",
+  cinematic:"A short-form visual work pushing the boundaries of narrative filmmaking.",
+  experimental:"Boundary-pushing visual exploration — form, light, and motion as pure language."
+};
 
-function openModal(embed,title,sub){
-  var cat=_activeCat||'cinematic',finalSrc=embed;
+function openModal(embed,title,sub,cat){
+  var finalSrc=embed;
   if(embed.includes('youtube.com')||embed.includes('youtu.be'))finalSrc=embed+(embed.includes('?')?'&':'?')+'autoplay=1&rel=0';
   if(embed.includes('drive.google.com'))finalSrc=embed.replace('/view','/preview').replace(/[?&]autoplay=1/,'');
   document.getElementById('modal-iframe').src=finalSrc;
   document.getElementById('modal-title').textContent=(title||'Video Title').toUpperCase();
   document.getElementById('sc-stat-title').textContent=title||'—';
   document.getElementById('sc-stat-artist').textContent=sub||'—';
-  document.getElementById('sc-stat-cat').textContent=cat.toUpperCase();
+  document.getElementById('sc-stat-cat').textContent=(cat||'cinematic').toUpperCase();
   var desc=document.getElementById('sc-desc');if(desc)desc.textContent=scDescs[cat]||scDescs.cinematic;
   document.getElementById('modal').classList.add('open');
 }
-function playFocused(shelfId){
+function playFocused(shelfId,cat){
   var idx=focusState[shelfId]||0,shelf=document.getElementById(shelfId);if(!shelf)return;
-  var t=shelf.querySelectorAll('.tile')[idx];if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub);
+  var t=shelf.querySelectorAll('.tile')[idx];
+  if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
 }
 function closeModal(){document.getElementById('modal').classList.remove('open');document.getElementById('modal-iframe').src='';}
 function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
-['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id){focusTile(id,0);});
+/* ── INIT ── */
+['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id){
+  var cat=id.replace('shelf-','');
+  focusTile(id,0,cat);
+});
 activeShelfId='shelf-trippy';
 </script>
 </body>

@@ -159,9 +159,19 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .cat-tab.active{background:rgba(160,0,0,0.2);border-color:rgba(200,0,0,0.5);color:#fff;}
 .cat-section{display:none;}.cat-section.active{display:block;}
 
-/* ─── SHELF ─── */
-.shelf-outer{position:relative;padding:20px 60px 24px;overflow:hidden;touch-action:pan-y;}
-.shelf{display:flex;gap:16px;transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1);will-change:transform;}
+/* ─── SHELF — native scroll-snap ─── */
+.shelf-outer{
+  position:relative;padding:20px 60px 40px;
+  overflow-x:auto;overflow-y:visible;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  margin-bottom:-20px;
+}
+.shelf-outer::-webkit-scrollbar{display:none;}
+.shelf{display:flex;gap:16px;width:max-content;}
+.tile{scroll-snap-align:center;}
 
 /* ─── TILE ─── */
 .tile{flex-shrink:0;width:var(--tile-w);cursor:pointer;transition:all 0.3s cubic-bezier(0.25,0.8,0.25,1);}
@@ -698,9 +708,12 @@ function focusTile(shelfId,idx,catId){
   var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
   if(dn)dn.textContent=t.dataset.title||'Video Title';
   if(ds)ds.textContent=t.dataset.sub||'';
+  /* Scroll the tile into view within its shelf-outer container */
   var outer=shelf.parentElement;
-  var off=idx*(t.offsetWidth+16)-(outer.clientWidth/2)+(t.offsetWidth/2);
-  shelf.style.transform='translateX('+(-Math.max(0,off))+'px)';
+  var tileLeft=t.offsetLeft;
+  var tileCenter=tileLeft+t.offsetWidth/2;
+  var outerCenter=outer.clientWidth/2;
+  outer.scrollTo({left:tileCenter-outerCenter,behavior:'smooth'});
 }
 
 /* ── TILE INTERACTIONS ── */
@@ -710,22 +723,7 @@ document.querySelectorAll('.tile').forEach(function(t){
     var cat=s.id.replace('shelf-','');
     focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),cat);
   });
-  /* Track touch start position to distinguish tap from swipe */
-  var tTouchX=0,tTouchY=0;
-  t.addEventListener('touchstart',function(e){tTouchX=e.touches[0].clientX;tTouchY=e.touches[0].clientY;},{passive:true});
-  t.addEventListener('touchend',function(e){
-    var dx=Math.abs((e.changedTouches[0]||{clientX:tTouchX}).clientX-tTouchX);
-    var dy=Math.abs((e.changedTouches[0]||{clientY:tTouchY}).clientY-tTouchY);
-    /* Only treat as tap if barely moved */
-    if(dx<10&&dy<10&&t.dataset.embed){
-      var s=t.closest('.shelf');
-      var cat=s?s.id.replace('shelf-',''):'cinematic';
-      openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
-    }
-  },{passive:true});
-  t.addEventListener('click',function(e){
-    /* Avoid double-firing on mobile (touchend already handled it) */
-    if('ontouchstart' in window)return;
+  t.addEventListener('click',function(){
     if(t.dataset.embed){
       var s=t.closest('.shelf');
       var cat=s?s.id.replace('shelf-',''):'cinematic';
@@ -734,48 +732,34 @@ document.querySelectorAll('.tile').forEach(function(t){
   });
 });
 
-/* ── TOUCH SWIPE — velocity-aware flick detection ── */
+/* ── SCROLL-BASED TILE FOCUS — no JS dragging needed ── */
+/* The browser handles all touch/swipe natively via overflow-x:auto + scroll-snap.
+   We just listen to scroll events and update which tile is "focused". */
 document.querySelectorAll('.shelf-outer').forEach(function(outer){
   var shelf=outer.querySelector('.shelf');if(!shelf)return;
-  var sx=0,sy=0,st=0,drag=false,startTime=0,lastX=0,velX=0,isHoriz=null;
-  function getX(){var m=(shelf.style.transform||'').match(/translateX\((-?[\d.]+)px\)/);return m?parseFloat(m[1]):0;}
-  outer.addEventListener('touchstart',function(e){
-    sx=e.touches[0].clientX;sy=e.touches[0].clientY;
-    st=getX();drag=true;startTime=Date.now();lastX=sx;velX=0;isHoriz=null;
-    shelf.style.transition='none';
-  },{passive:true});
-  outer.addEventListener('touchmove',function(e){
-    if(!drag)return;
-    var dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
-    if(isHoriz===null){isHoriz=Math.abs(dx)>Math.abs(dy)+4;}
-    if(!isHoriz)return;
-    velX=e.touches[0].clientX-lastX;lastX=e.touches[0].clientX;
-    var newX=st+dx;
-    var max=-(shelf.scrollWidth-outer.clientWidth+40);
-    shelf.style.transform='translateX('+Math.min(0,Math.max(max,newX))+'px)';
-  },{passive:true});
-  outer.addEventListener('touchend',function(e){
-    if(!drag)return;drag=false;
-    if(!isHoriz){
-      /* It was a vertical scroll or tap — don't snap */
-      shelf.style.transition='transform 0.3s ease';
-      return;
-    }
-    shelf.style.transition='transform 0.35s cubic-bezier(0.25,0.8,0.25,1)';
-    var tw=(shelf.querySelector('.tile')||{offsetWidth:300}).offsetWidth+16;
-    var elapsed=Date.now()-startTime;
-    var curX=getX();
-    /* Flick: fast swipe in <300ms with meaningful velocity → move one tile */
-    var flick=elapsed<300&&Math.abs(velX)>6;
-    var idx;
-    if(flick){
-      var cur=Math.round(-curX/tw);
-      idx=velX<0?Math.min(cur+1,shelf.querySelectorAll('.tile').length-1):Math.max(cur-1,0);
-    }else{
-      idx=Math.max(0,Math.min(Math.round(-curX/tw),shelf.querySelectorAll('.tile').length-1));
-    }
-    var cat=shelf.id.replace('shelf-','');
-    focusTile(shelf.id,idx,cat);
+  var ticking=false;
+  outer.addEventListener('scroll',function(){
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      ticking=false;
+      var tiles=shelf.querySelectorAll('.tile');if(!tiles.length)return;
+      var outerCenter=outer.scrollLeft+outer.clientWidth/2;
+      var closest=0,minDist=Infinity;
+      tiles.forEach(function(t,i){
+        var tCenter=t.offsetLeft+t.offsetWidth/2;
+        var dist=Math.abs(tCenter-outerCenter);
+        if(dist<minDist){minDist=dist;closest=i;}
+      });
+      var cat=shelf.id.replace('shelf-','');
+      /* Update focus state and label without re-scrolling */
+      tiles.forEach(function(t,i){t.classList.toggle('focused',i===closest);});
+      focusState[shelf.id]=closest;
+      var ft=tiles[closest];
+      var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
+      if(dn&&ft)dn.textContent=ft.dataset.title||'Video Title';
+      if(ds&&ft)ds.textContent=ft.dataset.sub||'';
+    });
   },{passive:true});
 });
 
@@ -787,8 +771,8 @@ document.addEventListener('keydown',function(e){
   var shelf=document.getElementById(activeShelfId);if(!shelf)return;
   var tiles=shelf.querySelectorAll('.tile'),idx=focusState[activeShelfId]||0;
   var cat=activeShelfId.replace('shelf-','');
-  if(e.key==='ArrowRight')focusTile(activeShelfId,Math.min(idx+1,tiles.length-1),cat);
-  if(e.key==='ArrowLeft')focusTile(activeShelfId,Math.max(idx-1,0),cat);
+  if(e.key==='ArrowRight'){e.preventDefault();focusTile(activeShelfId,Math.min(idx+1,tiles.length-1),cat);}
+  if(e.key==='ArrowLeft'){e.preventDefault();focusTile(activeShelfId,Math.max(idx-1,0),cat);}
   if(e.key==='Enter'||e.key===' '){
     var t=tiles[focusState[activeShelfId]||0];
     if(t&&t.dataset.embed)openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);
@@ -802,7 +786,10 @@ function switchCat(cat,el){
   var sec=document.getElementById('cat-'+cat);if(sec)sec.classList.add('active');
   if(el)el.classList.add('active');
   activeShelfId='shelf-'+cat;
-  var shelf=document.getElementById(activeShelfId);if(shelf)shelf.style.transform='';
+  var outer=document.querySelector('#shelf-'+cat+' .shelf-outer')||document.getElementById('shelf-'+cat);
+  /* Reset scroll to start */
+  var shelfOuter=document.getElementById('shelf-'+cat);
+  if(shelfOuter&&shelfOuter.parentElement)shelfOuter.parentElement.scrollLeft=0;
   focusTile(activeShelfId,0,cat);
 }
 

@@ -178,7 +178,14 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 @keyframes loadBar{to{width:100%;}}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-/* ─── RESPONSIVE ─── */
+/* ─── ALL GRID ─── */
+.all-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:28px 60px 40px;}
+.all-grid .tile{width:100%;}
+.all-grid .tile-inner{width:100%;height:0;padding-bottom:56.25%;position:relative;}
+.all-grid .tile-inner iframe{position:absolute;top:0;left:0;width:560px;height:315px;border:none;pointer-events:none;transform-origin:top left;}
+.cat-tag{display:inline-block;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-top:3px;border:1px solid rgba(200,0,0,0.35);color:rgba(255,120,120,0.7);background:rgba(180,0,0,0.1);}
+@media(max-width:1000px){.all-grid{grid-template-columns:repeat(2,1fr);padding:20px 20px 40px;}}
+@media(max-width:600px){.all-grid{grid-template-columns:1fr;padding:16px 16px 40px;}}
 @media(max-width:900px){
   :root{--tile-w:clamp(200px,44vw,280px);}
   .hero-content{grid-template-columns:1fr;}
@@ -287,21 +294,20 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <button class="cat-tab" onclick="switchCat('slowcin',this)">🎬 Slow Cinematic</button>
       </div>
     </div>
-    <!-- All Videos -->
+    <!-- All Videos — Grid -->
     <div class="cat-section active" id="cat-all">
-      <div class="shelf-outer"><div class="shelf" id="shelf-all">
-        <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Cake" data-sub="Slay / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · Trippy</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/yP_ge27GyFg?si=YWO5rRh5cwOvGzMr" data-title="New Trippy Visual" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/yP_ge27GyFg?si=YWO5rRh5cwOvGzMr" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>New Trippy Visual</h3><p>Artist / Info · Trippy</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · Trippy</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · Trippy</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/RUuphcHIlRg?si=XiHjTg52NkxyNXOK" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/RUuphcHIlRg?si=XiHjTg52NkxyNXOK" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · High Energy</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · High Energy</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · High Energy</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · High Energy</p></div></div>
-        <div class="tile" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · Slow Cinematic</p></div></div>
-        <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info · Slow Cinematic</p></div></div>
-      </div></div>
-      <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-all">Video Title</div><div class="detail-sub" id="ds-all">Artist / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-all','all')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
+      <div class="all-grid" id="shelf-all">
+        <div class="tile focused" data-embed="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" data-title="Cake" data-sub="Slay / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1GOmopE_rKh_h-tdrszRqedruaW_ZDpku/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">Trippy</span></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/yP_ge27GyFg?si=YWO5rRh5cwOvGzMr" data-title="New Trippy Visual" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/yP_ge27GyFg?si=YWO5rRh5cwOvGzMr" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>New Trippy Visual</h3><p>Artist / Info</p><span class="cat-tag">Trippy</span></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/146D0hdvMqKBGmvvV7Ud4B7pF7GNWhzei/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">Trippy</span></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1OjLVYY9ULHgWUKmJALOY8oF68TaBwYz-/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">Trippy</span></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/RUuphcHIlRg?si=XiHjTg52NkxyNXOK" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/RUuphcHIlRg?si=XiHjTg52NkxyNXOK" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">High Energy</span></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">High Energy</span></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">High Energy</span></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">High Energy</span></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/mEPz4wvpjoo?si=nQxGhwnRD4pt0Rut" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">Slow Cinematic</span></div></div>
+        <div class="tile" data-embed="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/17qlvQ3-pcRNIpVDolLbw3pEylZIfSTTu/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p><span class="cat-tag">Slow Cinematic</span></div></div>
+      </div>
     </div>
     <!-- Underground Style -->
     <div class="cat-section" id="cat-trippy">
@@ -480,8 +486,13 @@ function scaleTileIframes(){
   document.querySelectorAll('.tile-inner').forEach(function(inner){
     var iframe=inner.querySelector('iframe');if(!iframe)return;
     var bW=560,bH=315;
-    var sx=inner.offsetWidth/bW,sy=inner.offsetHeight/bH,s=Math.min(sx,sy);
-    var ox=(inner.offsetWidth-bW*s)/2,oy=(inner.offsetHeight-bH*s)/2;
+    var w=inner.offsetWidth,h=inner.offsetHeight;
+    // grid tiles use padding-bottom trick so offsetHeight may be 0 — use clientHeight
+    if(h===0)h=inner.clientHeight;
+    if(h===0){var rect=inner.getBoundingClientRect();h=rect.height;}
+    if(h===0)return;
+    var sx=w/bW,sy=h/bH,s=Math.min(sx,sy);
+    var ox=(w-bW*s)/2,oy=(h-bH*s)/2;
     iframe.style.transform='translate('+ox+'px,'+oy+'px) scale('+s+')';
     iframe.style.transformOrigin='top left';
   });
@@ -501,8 +512,11 @@ function focusTile(shelfId,idx,cat){
   var dn=document.getElementById('dn-'+cat),ds=document.getElementById('ds-'+cat);
   if(dn)dn.textContent=t.dataset.title||'Video Title';
   if(ds)ds.textContent=t.dataset.sub||'';
+  // only scroll for horizontal shelves, not the grid
   var outer=shelf.parentElement;
-  outer.scrollTo({left:t.offsetLeft+t.offsetWidth/2-outer.clientWidth/2,behavior:'smooth'});
+  if(outer&&outer.classList.contains('shelf-outer')){
+    outer.scrollTo({left:t.offsetLeft+t.offsetWidth/2-outer.clientWidth/2,behavior:'smooth'});
+  }
 }
 document.querySelectorAll('.tile').forEach(function(t){
   t.addEventListener('mouseenter',function(){var s=t.closest('.shelf');if(!s)return;focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),s.id.replace('shelf-',''));});

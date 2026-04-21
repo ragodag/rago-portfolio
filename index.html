@@ -70,8 +70,25 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .hero-img-box img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;position:absolute;top:0;left:0;filter:contrast(1.05) brightness(0.95);}
 .hero-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,10,40,0.6) 0%,transparent 50%);}
 .hero-img-tag{position:absolute;bottom:16px;left:-12px;background:rgba(160,0,0,0.9);backdrop-filter:blur(8px);border:1px solid rgba(200,0,0,0.5);padding:6px 16px;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:0.2em;color:#fff;text-transform:uppercase;}
-.hero-img-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:clamp(2rem,6vw,4rem);font-weight:900;letter-spacing:0.3em;color:rgba(200,0,0,0.25);opacity:0;transition:opacity 0.3s;pointer-events:none;}
-.hero-img-box.img-failed .hero-img-fallback{opacity:1;}
+.hero-img-fallback{display:none;}
+/* ── Hero image placeholder ── */
+.hero-img-placeholder{position:absolute;inset:0;background:linear-gradient(160deg,#0a0000 0%,#1a0505 40%,#0d0000 100%);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hip-scan{position:absolute;top:-100%;left:0;right:0;height:40%;background:linear-gradient(to bottom,transparent,rgba(180,0,0,0.06),transparent);animation:scanDown 4s ease-in-out infinite;}
+@keyframes scanDown{0%{top:-40%;}100%{top:110%;}}
+.hip-lines{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-evenly;padding:10px 0;opacity:0.07;}
+.hip-line{height:1px;background:linear-gradient(90deg,transparent,rgba(200,0,0,0.8),transparent);}
+.hip-center{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.hip-ring{width:90px;height:90px;border-radius:50%;border:1px solid rgba(180,0,0,0.3);position:relative;display:flex;align-items:center;justify-content:center;}
+.hip-ring::before{content:'';position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(180,0,0,0.15);}
+.hip-ring::after{content:'';position:absolute;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(200,0,0,0.5),transparent);animation:ringSpin 3s linear infinite;}
+@keyframes ringSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);};}
+.hip-name{font-family:'Orbitron',sans-serif;font-size:2.4rem;font-weight:900;letter-spacing:0.35em;color:rgba(220,40,40,0.55);text-shadow:0 0 40px rgba(200,0,0,0.4);}
+.hip-role{font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.4em;color:rgba(255,255,255,0.2);text-transform:uppercase;}
+.hip-corner{position:absolute;width:18px;height:18px;border-color:rgba(180,0,0,0.5);border-style:solid;}
+.hip-tl{top:12px;left:12px;border-width:2px 0 0 2px;}
+.hip-tr{top:12px;right:12px;border-width:2px 2px 0 0;}
+.hip-bl{bottom:12px;left:12px;border-width:0 0 2px 2px;}
+.hip-br{bottom:12px;right:12px;border-width:0 2px 2px 0;}
 .corner-mark{position:absolute;width:16px;height:16px;border-color:rgba(200,0,0,0.7);border-style:solid;}
 .corner-mark.tl{top:-2px;left:-2px;border-width:2px 0 0 2px;}.corner-mark.tr{top:-2px;right:-2px;border-width:2px 2px 0 0;}
 .corner-mark.bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px;}.corner-mark.br{bottom:-2px;right:-2px;border-width:0 2px 2px 0;}
@@ -332,10 +349,23 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
         <div class="corner-mark tl"></div><div class="corner-mark tr"></div>
         <div class="corner-mark bl"></div><div class="corner-mark br"></div>
         <div class="hero-img-box">
-          <img src="https://ragodag.github.io/rago-portfolio/rago.jpg" alt="Rago" 
-               onerror="this.style.display='none';this.parentElement.classList.add('img-failed')"/>
+          <div class="hero-img-placeholder">
+            <div class="hip-scan"></div>
+            <div class="hip-lines">
+              <div class="hip-line"></div><div class="hip-line"></div><div class="hip-line"></div>
+              <div class="hip-line"></div><div class="hip-line"></div><div class="hip-line"></div>
+            </div>
+            <div class="hip-center">
+              <div class="hip-ring"></div>
+              <div class="hip-name">RAGO</div>
+              <div class="hip-role">DIR · DP · UK</div>
+            </div>
+            <div class="hip-corner hip-tl"></div>
+            <div class="hip-corner hip-tr"></div>
+            <div class="hip-corner hip-bl"></div>
+            <div class="hip-corner hip-br"></div>
+          </div>
           <div class="hero-img-overlay"></div>
-          <div class="hero-img-fallback">RAGO</div>
         </div>
         <div class="hero-img-tag">Director &amp; DP</div>
       </div>
@@ -588,8 +618,19 @@ function focusTile(shelfId,idx,cat){
   }
 }
 document.querySelectorAll('.tile').forEach(function(t){
-  t.addEventListener('mouseenter',function(){var s=t.closest('.shelf');if(!s)return;focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),s.id.replace('shelf-',''));});
-  t.addEventListener('click',function(){if(t.dataset.embed){var s=t.closest('.shelf');openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,s?s.id.replace('shelf-',''):'cinematic');}});
+  t.addEventListener('mouseenter',function(){
+    var s=t.closest('.shelf');
+    if(s){focusTile(s.id,Array.from(s.querySelectorAll('.tile')).indexOf(t),s.id.replace('shelf-',''));}
+    // grid tiles: just highlight on hover, no shelf focus logic
+    var g=t.closest('.all-grid');
+    if(g){t.classList.add('focused');}
+  });
+  t.addEventListener('mouseleave',function(){
+    // grid tiles: remove highlight on leave
+    var g=t.closest('.all-grid');
+    if(g){t.classList.remove('focused');}
+  });
+  t.addEventListener('click',function(){if(t.dataset.embed){var s=t.closest('.shelf');var g=t.closest('.all-grid');var cat=s?s.id.replace('shelf-',''):g?'all':'cinematic';openModal(t.dataset.embed,t.dataset.title,t.dataset.sub,cat);}});
 });
 document.querySelectorAll('.shelf-outer').forEach(function(outer){
   var shelf=outer.querySelector('.shelf');if(!shelf)return;
@@ -699,7 +740,7 @@ function closeModal(){
 function closeModalOutside(e){if(e.target===document.getElementById('modal'))closeModal();}
 
 /* ── INIT ── */
-['shelf-all','shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id){
+['shelf-trippy','shelf-energy','shelf-slowcin','shelf-cinematic','shelf-experimental'].forEach(function(id){
   focusTile(id,0,id.replace('shelf-',''));
 });
 activeShelfId='shelf-all';

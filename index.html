@@ -142,70 +142,13 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
 .sc-blink{font-size:10px;letter-spacing:0.2em;color:rgba(255,120,120,0.7);animation:blink 1.1s step-end infinite;}
 .sc-body{display:grid;grid-template-columns:1.4fr 1fr;}
 .sc-left{padding:20px;border-right:1px solid rgba(200,0,0,0.25);display:flex;flex-direction:column;gap:12px;background:rgba(0,0,0,0.3);}
-
-/*
-  ── MODAL VIDEO FRAME ──
-  For Drive iframes: we use a container that is taller than the
-  visible 16:9 box, then clip it. The extra height at the top
-  hides Drive's toolbar. No JS pixel math needed.
-
-  Outer .sc-vid-clip = the visible 16:9 window (overflow:hidden)
-  Inner .sc-vid-frame = taller box that shifts the iframe UP
-  
-  For YouTube: no toolbar, iframe fills 100% of the clip box directly.
-  We toggle class "is-drive" on .sc-vid-clip to switch modes.
-*/
-
-/* The visible clipping window — always 16:9 */
-.sc-vid-clip {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  border: 1px solid rgba(200,0,0,0.3);
-  border-radius: 3px;
-  background: #000;
-}
-
-/* Corner decoration sits on top of everything */
-.sc-vid-corners {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-}
+.sc-vid-clip{position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid rgba(200,0,0,0.3);border-radius:3px;background:#000;}
+.sc-vid-corners{position:absolute;inset:0;z-index:3;pointer-events:none;}
 .sc-c{position:absolute;width:14px;height:14px;border-color:rgba(220,60,60,0.8);border-style:solid;}
 .sc-c.tl{top:0;left:0;border-width:2px 0 0 2px;}.sc-c.tr{top:0;right:0;border-width:2px 2px 0 0;}
 .sc-c.bl{bottom:0;left:0;border-width:0 0 2px 2px;}.sc-c.br{bottom:0;right:0;border-width:0 2px 2px 0;}
-
-/*
-  YouTube mode (default): iframe fills the clip box exactly.
-*/
-#modal-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-/*
-  Drive mode: we shift the iframe up to hide the toolbar.
-  The toolbar is roughly 13% of the iframe height on mobile,
-  slightly less on desktop. We overshoot to ~15% to be safe.
-  The clip box hides everything above its top edge.
-
-  Technique: make the iframe start above the clip box (negative top),
-  and make it taller to compensate so the bottom isn't cut.
-*/
-.sc-vid-clip.is-drive #modal-iframe {
-  top: -15%;
-  height: 130%;
-}
-
+#modal-iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;}
+.sc-vid-clip.is-drive #modal-iframe{top:-15%;height:130%;}
 .sc-nameplate{background:rgba(180,0,0,0.15);border:1px solid rgba(200,0,0,0.35);border-radius:24px;padding:8px 16px;}
 .sc-nameplate-inner{display:flex;align-items:center;gap:10px;}
 .sc-nameplate-icon{width:28px;height:28px;border-radius:50%;background:rgba(180,0,0,0.3);border:1px solid rgba(200,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,120,120,0.9);flex-shrink:0;}
@@ -354,13 +297,13 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
       </div></div>
       <div class="detail-panel"><div class="detail-info"><div class="detail-name" id="dn-trippy">Video Title</div><div class="detail-sub" id="ds-trippy">Artist / Info</div></div><div class="detail-btns"><button class="dbt primary" onclick="playFocused('shelf-trippy','trippy')"><span class="dbt-ico">▶</span>PLAY</button><button class="dbt">OVERVIEW</button></div></div>
     </div>
-    <!-- Energy -->
+    <!-- High Energy — NEW VIDEO ADDED AS FIRST TILE -->
     <div class="cat-section" id="cat-energy">
       <div class="shelf-outer"><div class="shelf" id="shelf-energy">
-        <div class="tile focused" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile focused" data-embed="https://www.youtube.com/embed/RUuphcHIlRg?si=XiHjTg52NkxyNXOK" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/RUuphcHIlRg?si=XiHjTg52NkxyNXOK" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
+        <div class="tile" data-embed="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/4UmQjm7oFtQ?si=NezxOwEUhfCPhZuo" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/PvgQr4G1x-0?si=8wR-3Bvb-gNRqkwO" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-embed="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" data-title="Video Title" data-sub="Artist / Info"><div class="tile-inner"><iframe src="https://drive.google.com/file/d/1gbLIREMt5d6KIGXTnRTFOmqmp7y03zrS/preview" allow="autoplay"></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
-        <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
         <div class="tile" data-title="Coming Soon" data-sub="—"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div></div><div class="tile-label"><h3>Video Title</h3><p>Artist / Info</p></div></div>
       </div></div>
@@ -390,7 +333,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </div>
 </section>
 
-<!-- SECTION 2 — CINEMATIC -->
+<!-- SECTION 2 — CINEMATIC — qx9fIa0xMls moved here as first tile -->
 <section id="section-cinematic" class="page-section">
   <div class="section-header">
     <div><div class="section-label">Selected Work · 02</div><div class="section-title">Cinematic Projects</div></div>
@@ -398,7 +341,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </div>
   <div class="portfolio-section">
     <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-cinematic">
-      <div class="tile focused" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
+      <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Director / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Director / Info</p></div></div>
@@ -419,7 +362,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </div>
 </section>
 
-<!-- SECTION 3 — EXPERIMENTAL -->
+<!-- SECTION 3 — EXPERIMENTAL — qx9fIa0xMls removed, all placeholders -->
 <section id="section-experimental" class="page-section">
   <div class="section-header">
     <div><div class="section-label">Selected Work · 03</div><div class="section-title">Experimental</div></div>
@@ -427,7 +370,7 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
   </div>
   <div class="portfolio-section">
     <div class="shelf-outer" style="padding-top:36px;"><div class="shelf" id="shelf-experimental">
-      <div class="tile focused" data-embed="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><iframe src="https://www.youtube.com/embed/qx9fIa0xMls?si=V1Pi898QqDPw_zTi" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><div class="tile-cover"></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
+      <div class="tile focused" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
       <div class="tile" data-title="Project Title" data-sub="Description / Info"><div class="tile-inner"><div class="tile-placeholder"><div class="play-ring"></div><span>Coming Soon</span></div><div class="tile-play-btn"></div></div><div class="tile-label"><h3>Project Title</h3><p>Description / Info</p></div></div>
@@ -465,7 +408,6 @@ body{background:#0d0000;font-family:'Rajdhani',sans-serif;color:var(--white);ove
     </div>
     <div class="sc-body">
       <div class="sc-left">
-        <!-- sc-vid-clip is the visible 16:9 window; "is-drive" class shifts iframe up to hide toolbar -->
         <div class="sc-vid-clip" id="sc-vid-clip">
           <div class="sc-vid-corners"><span class="sc-c tl"></span><span class="sc-c tr"></span><span class="sc-c bl"></span><span class="sc-c br"></span></div>
           <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; fullscreen"></iframe>
@@ -611,7 +553,6 @@ function openModal(embed,title,sub,cat){
 
   var isDrive=embed.includes('drive.google.com');
 
-  /* Toggle CSS class — Drive mode shifts iframe up to hide toolbar */
   if(isDrive){
     clip.classList.add('is-drive');
     iframe.src=embed;
